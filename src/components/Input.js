@@ -1,8 +1,12 @@
 import { useContext } from "react"
-import { BoardContext } from "../BoardContext"
+import BoardContext from "../BoardContext"
 
-function Options() {
+function Input() {
 	const { boardSize, setBoardSize } = useContext(BoardContext)
+	function createButtons(event) {
+		const n = Number(event.target.value)
+		setBoardSize(n)
+	}
 	return (
 		<>
 			<form style={{
@@ -10,14 +14,14 @@ function Options() {
 				alignItems: "center",
 				justifyContent: "space-around",
 			}}>
-				<label for="num-cells" >
+				<label htmlFor="num-cells" >
 					<input
 						autoFocus
 						id="num-cells"
 						min="5" // There are no solutions for n < 5
 						max="26" // Sticking to the English alphabet
 						name="num-cells"
-						onChange={e => setBoardSize(Number(e.target.value))}
+						onChange={createButtons}
 						style={{
 							padding: "1rem",
 							border: "1px solid black",
@@ -28,10 +32,13 @@ function Options() {
 						value={boardSize}
 					/>
 				</label>
-				<button className="replay">Replay solution!</button>
+
+				<label htmlFor="speed">
+					<input type="range" name="animation-speed" id="" />
+				</label>
 			</form>
 		</>
 	)
 }
 
-export default Options
+export default Input

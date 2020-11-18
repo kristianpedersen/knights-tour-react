@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import Cell from "./Cell"
 import { useContext } from "react"
-import { BoardContext } from "../BoardContext"
+import BoardContext from "../BoardContext"
 
 function Board() {
 	const { boardSize } = useContext(BoardContext)
@@ -20,13 +20,12 @@ function Board() {
 		}
 	}
 
-	console.table(emptyBoard)
-
 	const BoardContainer = styled.div`
 		margin-top: 1rem;
 		width: 100%;
 		height: 100%;
-		background: beige;
+		background: #333;
+		color: #aaa;
 		display: grid;
 		grid-template-columns: repeat(${boardSize}, calc(${100 / boardSize}%));
 		grid-template-rows: repeat(${boardSize}, calc(${100 / (boardSize)}%));

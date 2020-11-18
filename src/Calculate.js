@@ -1,28 +1,15 @@
-import { useContext } from "react"
-import { BoardContext } from "./BoardContext"
-
-export default function Calculate(x, y) {
-	const { setIsCalculating } = useContext(BoardContext)
-	setIsCalculating(true)
-	console.clear()
-	const boardSize = 60
+export default function Calculate(startX, startY, boardSize) {
 	const numberOfCells = boardSize ** 2
-	const startX = 1
-	const startY = 2
 	const board = [...Array(boardSize)].map((_, x) => [...Array(boardSize)].map((_, y) => Cell(x, y)))
 	const history = []
 	const playback = []
-	const optimizedAlgorithm = true
-	let n = 0
 
 	board[startX][startY].validMoves = board[startX][startY].getValidMoves()
-	console.table(history)
-
 	if (history.length === boardSize ** 2) {
-		console.log(`Jippi! Greide det på ${n.toLocaleString("NO")} trekk!`)
-		setIsCalculating(false)
+		console.log(playback.filter(cell => cell.colorize))
+		return { history, playback }
 	} else {
-		console.log("Enten rewind eller ingen løsning")
+		console.log("Noe gikk galt")
 	}
 
 	function Cell(cellX, cellY) {
@@ -32,7 +19,6 @@ export default function Calculate(x, y) {
 		const name = `${rowName}${colName}`
 
 		function getValidMoves(getValidMovesLength = true, rewind = false) {
-			n++
 			if (getValidMovesLength) {
 				if (history.length > 0) {
 					playback.push({ ...history[history.length - 1], colorize: true })
@@ -65,11 +51,11 @@ export default function Calculate(x, y) {
 
 		function getValidCellsFromBoard() {
 			return board.flat().filter(otherCell => {
-				const xDistance = Math.abs(otherCell.x - cellX)
-				const yDistance = Math.abs(otherCell.y - cellY)
+				const xDistance = Math.abs(otherCell.x - cellX) * -1
+				const yDistance = Math.abs(otherCell.y - cellY) * -1
 				const moveIsValid =
-					(xDistance === 2 && yDistance === 1)
-					|| (xDistance === 1 && yDistance === 2)
+					(xDistance === -2 && yDistance === -1)
+					|| (xDistance === -1 && yDistance === -2)
 				return moveIsValid && !otherCell.visited
 			})
 		}

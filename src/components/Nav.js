@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import { Switch, Route } from "react-router-dom"
 
 function Menu({ title }) {
 	const Nav = styled.nav`
@@ -26,7 +27,7 @@ function Menu({ title }) {
 		<Nav>
 			<h1>{title}</h1>
 			<ul>
-				<li class="active">Board</li>
+				<li className="active">Board</li>
 				<li>About</li>
 			</ul>
 		</Nav>
