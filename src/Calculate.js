@@ -27,7 +27,7 @@ export default function Calculate(x, y) {
 
 	function Cell(cellX, cellY) {
 		let validMoves = []
-		const rowName = "ABCDEFGHIJK"[boardSize - 1 - cellY]
+		const rowName = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[boardSize - cellY - 1]
 		const colName = cellX + 1
 		const name = `${rowName}${colName}`
 
@@ -46,24 +46,14 @@ export default function Calculate(x, y) {
 			if (rewind) {
 				validMoves.push(validMoves.shift())
 			} else {
-				validMoves = board.flat().filter(otherCell => {
-					const valid1 = (Math.abs(otherCell.x - cellX) === 2) && (Math.abs(otherCell.y - cellY) === 1)
-					const valid2 = (Math.abs(otherCell.x - cellX) === 1) && (Math.abs(otherCell.y - cellY) === 2)
-					return (valid1 || valid2) && !otherCell.visited
-				})
+				validMoves = getValidCellsFromBoard()
 			}
 
 			if (getValidMovesLength && validMoves.length > 0) {
 				for (const move of validMoves) {
 					move.validMoves = move.getValidMoves(getValidMovesLength = false)
 				}
-
-				if (optimizedAlgorithm) {
-					validMoves.sort((a, b) => a.validMoves.length - b.validMoves.length)
-				} else {
-					validMoves.sort((a, b) => b.validMoves.length - a.validMoves.length)
-				}
-
+				validMoves.sort((a, b) => a.validMoves.length - b.validMoves.length)
 				const next = validMoves[0]
 				board[next.x][next.y].getValidMoves()
 			} else if (getValidMovesLength && validMoves.length === 0 && history.length < numberOfCells) {
@@ -71,6 +61,17 @@ export default function Calculate(x, y) {
 			}
 
 			return validMoves
+		}
+
+		function getValidCellsFromBoard() {
+			return board.flat().filter(otherCell => {
+				const xDistance = Math.abs(otherCell.x - cellX)
+				const yDistance = Math.abs(otherCell.y - cellY)
+				const moveIsValid =
+					(xDistance === 2 && yDistance === 1)
+					|| (xDistance === 1 && yDistance === 2)
+				return moveIsValid && !otherCell.visited
+			})
 		}
 
 		function goBackInHistory() {

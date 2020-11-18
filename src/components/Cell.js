@@ -112,7 +112,8 @@ function Cell({ name, x, y }) {
 	return (
 		<CellButton
 			disabled={isCalculating}
-			onClick={() => Calculate(x, y)}>
+			onClick={() => Calculate(x, y)}
+		>
 			{name}
 		</CellButton>
 	)
