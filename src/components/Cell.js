@@ -8,16 +8,17 @@ const SingleCell = styled.div`
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		transition: all .2s ease;
+		transition: all .25s ease-out;
 		border-color: #999;
 		cursor: pointer;
 		
 		&:hover {
-			box-shadow: 0 0 10px white;
+			background-color: #378252;
+			box-shadow: 0 0 30px yellowgreen;
 		}
 
 		&.active:hover{
-			box-shadow: 0 0 10px black;
+			box-shadow: 0 0 30px black;
 		}
 	`
 

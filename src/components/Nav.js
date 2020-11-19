@@ -1,13 +1,5 @@
 import styled from "styled-components"
-import {
-	BrowserRouter as Router,
-	Link,
-	NavLink,
-	Route,
-	Switch,
-} from "react-router-dom"
-import Board from "./Board"
-import About from "./About"
+import { NavLink } from "react-router-dom"
 
 const Nav = styled.nav`
 	display: flex;

@@ -13,11 +13,11 @@ function App() {
     <BoardProvider>
       <div className="App">
         <Router>
-          <Animation />
           <Menu title="Knight's Tour" />
 
           <Switch>
             <Route exact path="/">
+              <Animation />
               <Input />
               <Board />
             </Route>

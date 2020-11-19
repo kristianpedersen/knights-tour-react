@@ -28,25 +28,24 @@ function Animation() {
 				const button = buttons.find(b => b.innerHTML === move.name)
 				const hue = Math.floor(index * (270 / board.length))
 
-
-				if (showLines && index < board.length - 1) {
+				if (showLines && index > 0) {
 					// Draw SVG line from this button to next
 					const { left, width, top, height } = button.getBoundingClientRect()
 					const x = left + width / 2
 					const y = top + height / 2
-					const nextButton = buttons.find(b => b.innerHTML === board[index + 1].name)
-					const nextClientRect = nextButton.getBoundingClientRect()
-					const next = {
-						left: nextClientRect.left,
-						width: nextClientRect.width,
-						top: nextClientRect.top,
-						height: nextClientRect.height,
+					const previousButton = buttons.find(b => b.innerHTML === board[index - 1].name)
+					const previousClientRect = previousButton.getBoundingClientRect()
+					const previous = {
+						left: previousClientRect.left,
+						width: previousClientRect.width,
+						top: previousClientRect.top,
+						height: previousClientRect.height,
 					}
-					console.log(next.left, next.width, next.top, next.height)
-					const nextX = next.left + next.width / 2
-					const nextY = next.top + next.height / 2
+					console.log(previous.left, previous.width, previous.top, previous.height)
+					const previousX = previous.left + previous.width / 2
+					const previousY = previous.top + previous.height / 2
 
-					pathString += `M ${x} ${y} L ${nextX} ${nextY}`
+					pathString += `M ${x} ${y} L ${previousX} ${previousY}`
 
 					blackLine.setAttributeNS(null, "d", pathString);
 					blackLine.setAttributeNS(null, 'stroke', "black")
