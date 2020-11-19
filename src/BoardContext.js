@@ -2,7 +2,7 @@ import { createContext, useState } from "react"
 
 export const BoardContext = createContext()
 
-export const BoardProvider = props => {
+export function BoardProvider({ children }) {
 	const [animationSpeed, setAnimationSpeed] = useState(50)
 	const [board, setBoard] = useState([])
 	const [boardSize, setBoardSize] = useState(8)
@@ -19,7 +19,7 @@ export const BoardProvider = props => {
 			playback, setPlayback,
 			showLines, setShowLines,
 		}}>
-			{props.children}
+			{children}
 		</BoardContext.Provider>
 	)
 }

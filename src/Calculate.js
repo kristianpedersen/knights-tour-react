@@ -14,10 +14,7 @@ export default function Calculate(startX, startY, boardSize) {
 
 	board[startX][startY].validMoves = board[startX][startY].getValidMoves()
 	if (history.length === boardSize ** 2) {
-		console.log(playback.filter(cell => cell.colorize))
 		return { history, playback }
-	} else {
-		console.log("Noe gikk galt")
 	}
 
 	function Cell(cellX, cellY) {

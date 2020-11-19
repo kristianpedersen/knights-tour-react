@@ -48,7 +48,6 @@ function Animation() {
 						top: previousClientRect.top,
 						height: previousClientRect.height,
 					}
-					console.log(previous.left, previous.width, previous.top, previous.height)
 					const previousX = previous.left + previous.width / 2
 					const previousY = previous.top + previous.height / 2
 
