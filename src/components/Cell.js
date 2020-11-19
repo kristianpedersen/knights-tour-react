@@ -13,12 +13,11 @@ const SingleCell = styled.div`
 		cursor: pointer;
 		
 		&:hover {
-			background-color: #378252;
-			box-shadow: 0 0 30px yellowgreen;
+			box-shadow: 0 0 10px white;
 		}
 
 		&.active:hover{
-			box-shadow: 0 0 30px black;
+			box-shadow: 0 0 10px black;
 		}
 	`
 

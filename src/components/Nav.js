@@ -18,11 +18,8 @@ const Nav = styled.nav`
 	li {
 		padding: 0 5rem;
 		cursor: pointer;
-	}
-
-	li.active {
-		text-decoration: underline;
-		font-weight: bold;
+		color: white;
+		text-decoration: none;
 	}
 `
 
@@ -32,7 +29,7 @@ function Menu({ title }) {
 		<Nav>
 			<h1>{title}</h1>
 			<ul>
-				<NavLink exact to="/"><li className="active">Board</li></NavLink>
+				<NavLink exact to="/"><li>Board</li></NavLink>
 				<NavLink to="/about"><li>About</li></NavLink>
 			</ul>
 		</Nav>

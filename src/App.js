@@ -9,27 +9,27 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 import "./App.css"
 
 function App() {
-  return (
-    <BoardProvider>
-      <div className="App">
-        <Router>
-          <Menu title="Knight's Tour" />
+	return (
+		<BoardProvider>
+			<div className="App">
+				<Router>
+					<Menu title="Knight's Tour" />
 
-          <Switch>
-            <Route exact path="/">
-              <Animation />
-              <Input />
-              <Board />
-            </Route>
-            <Route path="/about">
-              <About />
-            </Route>
-          </Switch>
+					<Switch>
+						<Route exact path="/">
+							<Animation />
+							<Input />
+							<Board />
+						</Route>
+						<Route path="/about">
+							<About />
+						</Route>
+					</Switch>
 
-        </Router>
-      </div>
-    </BoardProvider>
-  )
+				</Router>
+			</div>
+		</BoardProvider>
+	)
 }
 
 export default App

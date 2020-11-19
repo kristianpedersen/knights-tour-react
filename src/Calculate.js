@@ -1,6 +1,10 @@
-// Prototyped it in Node. Haven't adapted it properly to React yet.
-// For the time being, it simply returns an array.
-// The unimplemented "playback" array includes a cell's valid moves.
+/**
+ Prototyped it in Node.js. Haven't adapted it properly to React yet.
+ For the time being, it simply returns an array.
+ It could surely be made to affect state, but would the number of state updates be too taxing?
+ The unimplemented "playback" array includes a cell's valid moves. This would also be cool to visualize.
+ */
+
 
 export default function Calculate(startX, startY, boardSize) {
 	const numberOfCells = boardSize ** 2

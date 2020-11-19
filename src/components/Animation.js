@@ -10,13 +10,16 @@ function Animation() {
 	} = useContext(BoardContext)
 
 	useEffect(function removeSVG() {
-		document.querySelectorAll("svg").forEach(svg => svg.remove())
+		document.querySelectorAll("svg")
+			.forEach(function remove(svg) {
+				svg.remove()
+			})
 	}, [board, boardSize, showLines, animationSpeed])
 
 	useEffect(function animateBoardOnStateChange() {
 		const buttons = [...document.querySelectorAll(".board-button")]
 
-		board.forEach((move, index) => {
+		board.forEach(function colorizeCellAndCreateLine(move, index) {
 			let svg = document.createElementNS("http://www.w3.org/2000/svg", 'svg')
 			let pathString = ""
 			svg.setAttributeNS(null, 'width', '100%')
@@ -24,8 +27,10 @@ function Animation() {
 			let blackLine = document.createElementNS("http://www.w3.org/2000/svg", "path")
 			let coloredLine = document.createElementNS("http://www.w3.org/2000/svg", "path")
 
-			setTimeout(() => {
-				const button = buttons.find(b => b.innerHTML === move.name)
+			setTimeout(function showMovesStepByStep() {
+				const button = buttons.find(function getCurrentButton(b) {
+					return b.innerHTML === move.name
+				})
 				const hue = Math.floor(index * (270 / board.length))
 
 				if (showLines && index > 0) {
@@ -33,7 +38,9 @@ function Animation() {
 					const { left, width, top, height } = button.getBoundingClientRect()
 					const x = left + width / 2
 					const y = top + height / 2
-					const previousButton = buttons.find(b => b.innerHTML === board[index - 1].name)
+					const previousButton = buttons.find(function getPreviousButton(b) {
+						return b.innerHTML === board[index - 1].name
+					})
 					const previousClientRect = previousButton.getBoundingClientRect()
 					const previous = {
 						left: previousClientRect.left,
