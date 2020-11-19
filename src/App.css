@@ -17,7 +17,8 @@
 	align-items: center;
 	justify-content: center;
 	transition: all .2s ease;
-	border-color: #999
+	border-color: #999;
+	cursor: pointer;
 }
 
 .board-button:hover {
@@ -29,5 +30,16 @@
 }
 
 form p {
+	margin-top: 1rem;
+}
+
+svg {
+	pointer-events: none;
+}
+
+label {
+	padding: 1rem;
+	background-color: #eee;
+	border: 1px solid #ddd;
 	margin-top: 1rem;
 }

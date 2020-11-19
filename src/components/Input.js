@@ -4,7 +4,8 @@ import BoardContext from "../BoardContext"
 function Input() {
 	const {
 		boardSize, setBoardSize,
-		animationSpeed, setAnimationSpeed
+		animationSpeed, setAnimationSpeed,
+		showLines, setShowLines,
 	} = useContext(BoardContext)
 
 	function createButtons(event) {
@@ -12,6 +13,10 @@ function Input() {
 			const n = Number(event.target.value)
 			setBoardSize(n)
 		}
+	}
+
+	function toggleShowLines() {
+		setShowLines(prev => !prev)
 	}
 
 	function updateAnimationSpeed(event) {
@@ -43,6 +48,17 @@ function Input() {
 						value={boardSize}
 					/>
 					<p>Board size</p>
+				</label>
+
+				<label htmlFor="show-lines">
+					<input
+						type="checkbox"
+						name="show-lines"
+						id="show-lines"
+						onChange={toggleShowLines}
+						checked={showLines}
+					/>
+					<p>Show lines</p>
 				</label>
 
 				<label htmlFor="speed">

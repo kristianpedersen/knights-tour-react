@@ -8,6 +8,7 @@ function Menu({ title }) {
 		padding: 2rem;
 		background: hsl(350, 50%, 50%);
 		color: white;
+		box-shadow: 0 0 10px 0 rgba(0,0,0,0.5);
 		border-bottom: 1px solid black;
 
 		ul{
