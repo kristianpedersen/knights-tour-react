@@ -1,22 +1,29 @@
 import { useContext } from "react"
 import { BoardContext } from "../BoardContext"
+import styled from "styled-components"
 
 function Input() {
+	const BigButton = styled.button`
+	padding: 1rem;
+	font-size: 1.5rem;
+`
 	const {
 		animationSpeed, setAnimationSpeed,
+		setBoard,
 		boardSize, setBoardSize,
-		showLines, setShowLines,
 	} = useContext(BoardContext)
+
+	function reset(event) {
+		event.preventDefault()
+		setBoard(previousBoard => [])
+	}
+
 
 	function createButtons(event) {
 		if (event.target.value <= 26) {
 			const n = Number(event.target.value)
 			setBoardSize(n)
 		}
-	}
-
-	function toggleShowLines() {
-		setShowLines(prev => !prev)
 	}
 
 	function updateAnimationSpeed(event) {
@@ -50,16 +57,7 @@ function Input() {
 					<p>Board size</p>
 				</label>
 
-				<label htmlFor="show-lines">
-					<input
-						type="checkbox"
-						name="show-lines"
-						id="show-lines"
-						onChange={toggleShowLines}
-						checked={showLines}
-					/>
-					<p>Show lines</p>
-				</label>
+				<BigButton onClick={reset}>Clear</BigButton>
 
 				<label htmlFor="speed">
 					<input

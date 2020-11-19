@@ -11,24 +11,6 @@
 	flex-direction: column;
 }
 
-.board-button {
-	border: 1px solid;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	transition: all .2s ease;
-	border-color: #999;
-	cursor: pointer;
-}
-
-.board-button:hover {
-	box-shadow: 0 0 10px white;
-}
-
-.board-button.active:hover{
-	box-shadow: 0 0 10px black;
-}
-
 form p {
 	margin-top: 1rem;
 }

@@ -2,7 +2,24 @@ import { useContext } from "react"
 import styled from "styled-components"
 import Calculate from "../Calculate"
 import { BoardContext } from "../BoardContext"
-import { motion, animatepres } from "framer-motion"
+
+const SingleCell = styled.div`
+		border: 1px solid;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: all .2s ease;
+		border-color: #999;
+		cursor: pointer;
+		
+		&:hover {
+			box-shadow: 0 0 10px white;
+		}
+
+		&.active:hover{
+			box-shadow: 0 0 10px black;
+		}
+	`
 
 function Cell({ name, x, y }) {
 	const {
@@ -17,13 +34,14 @@ function Cell({ name, x, y }) {
 		setHistory(playback)
 	}
 
+
 	return (
-		<div
+		<SingleCell
 			className="board-button"
 			onClick={disableAllButtonsAndCalculate}
 		>
 			{name}
-		</div>
+		</SingleCell>
 	)
 }
 

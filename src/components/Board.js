@@ -4,21 +4,9 @@ import { useContext } from "react"
 import { BoardContext } from "../BoardContext"
 
 function Board() {
-	const { boardSize } = useContext(BoardContext)
 	const emptyBoard = []
-
-	for (let y = 0; y < boardSize; y++) {
-		const letter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[boardSize - 1 - y]
-		for (let x = 0; x < boardSize; x++) {
-			emptyBoard.push(
-				<Cell
-					name={`${letter}${x + 1}`}
-					percent={0}
-					{...{ x, y }}
-				/>
-			)
-		}
-	}
+	const { boardSize } = useContext(BoardContext)
+	document.querySelectorAll("svg").forEach(svg => svg.remove())
 
 	const BoardContainer = styled.div`
 		margin-top: 1rem;
@@ -30,12 +18,24 @@ function Board() {
 		grid-template-columns: repeat(${boardSize}, calc(${100 / boardSize}%));
 		grid-template-rows: repeat(${boardSize}, calc(${100 / (boardSize)}%));
 	`
+
+	for (let y = 0; y < boardSize; y++) {
+		const letter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[boardSize - 1 - y]
+		for (let x = 0; x < boardSize; x++) {
+			emptyBoard.push(
+				<Cell
+					name={`${letter}${x + 1}`}
+					{...{ x, y }}
+				/>
+			)
+		}
+	}
+
 	return (
 		<BoardContainer className="board">
 			{ emptyBoard.map(element => element)}
 		</BoardContainer>
 	)
 }
-
 
 export default Board

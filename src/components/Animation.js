@@ -15,7 +15,6 @@ function Animation() {
 
 	useEffect(function animateBoardOnStateChange() {
 		const buttons = [...document.querySelectorAll(".board-button")]
-		buttons.forEach(button => button.classList.remove("active"))
 
 		board.forEach((move, index) => {
 			let svg = document.createElementNS("http://www.w3.org/2000/svg", 'svg')
