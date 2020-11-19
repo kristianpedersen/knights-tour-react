@@ -2,11 +2,22 @@ import { useContext } from "react"
 import BoardContext from "../BoardContext"
 
 function Input() {
-	const { boardSize, setBoardSize } = useContext(BoardContext)
+	const {
+		boardSize, setBoardSize,
+		animationSpeed, setAnimationSpeed
+	} = useContext(BoardContext)
+
 	function createButtons(event) {
-		const n = Number(event.target.value)
-		setBoardSize(n)
+		if (event.target.value <= 26) {
+			const n = Number(event.target.value)
+			setBoardSize(n)
+		}
 	}
+
+	function updateAnimationSpeed(event) {
+		setAnimationSpeed(event.target.value)
+	}
+
 	return (
 		<>
 			<form style={{
@@ -31,10 +42,21 @@ function Input() {
 						type="number"
 						value={boardSize}
 					/>
+					<p>Board size</p>
 				</label>
 
 				<label htmlFor="speed">
-					<input type="range" name="animation-speed" id="" />
+					<input
+						type="range"
+						name="animation-speed"
+						onChange={updateAnimationSpeed}
+						value={animationSpeed}
+						min="0"
+						max="500"
+						step="5"
+						style={{ width: "100%" }}
+					/>
+					<p>Interval: {animationSpeed} ms (total duration: {(animationSpeed * (boardSize ** 2) / 1000).toFixed(1)} s)</p>
 				</label>
 			</form>
 		</>

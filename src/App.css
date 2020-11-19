@@ -27,3 +27,7 @@
 .board-button.active:hover{
 	box-shadow: 0 0 10px black;
 }
+
+form p {
+	margin-top: 1rem;
+}

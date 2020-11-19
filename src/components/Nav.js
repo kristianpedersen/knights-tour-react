@@ -6,7 +6,9 @@ function Menu({ title }) {
 		display: flex;
 		justify-content: space-between;
 		padding: 2rem;
-		background: hsl(130, 50%, 85%);
+		background: hsl(350, 50%, 50%);
+		color: white;
+		border-bottom: 1px solid black;
 
 		ul{
 			display: flex;
