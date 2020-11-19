@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import Cell from "./Cell"
 import { useContext } from "react"
-import BoardContext from "../BoardContext"
+import { BoardContext } from "../BoardContext"
 
 function Board() {
 	const { boardSize } = useContext(BoardContext)
@@ -31,7 +31,7 @@ function Board() {
 		grid-template-rows: repeat(${boardSize}, calc(${100 / (boardSize)}%));
 	`
 	return (
-		<BoardContainer>
+		<BoardContainer className="board">
 			{ emptyBoard.map(element => element)}
 		</BoardContainer>
 	)

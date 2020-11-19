@@ -1,3 +1,7 @@
+// Prototyped it in Node. Haven't adapted it properly to React yet.
+// For the time being, it simply returns an array.
+// The unimplemented "playback" array includes a cell's valid moves.
+
 export default function Calculate(startX, startY, boardSize) {
 	const numberOfCells = boardSize ** 2
 	const board = [...Array(boardSize)].map((_, x) => [...Array(boardSize)].map((_, y) => Cell(x, y)))

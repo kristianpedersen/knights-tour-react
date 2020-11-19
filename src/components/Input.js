@@ -1,10 +1,10 @@
 import { useContext } from "react"
-import BoardContext from "../BoardContext"
+import { BoardContext } from "../BoardContext"
 
 function Input() {
 	const {
-		boardSize, setBoardSize,
 		animationSpeed, setAnimationSpeed,
+		boardSize, setBoardSize,
 		showLines, setShowLines,
 	} = useContext(BoardContext)
 

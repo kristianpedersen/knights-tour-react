@@ -1,8 +1,8 @@
 import { useContext } from "react"
 import styled from "styled-components"
 import Calculate from "../Calculate"
-import BoardContext from "../BoardContext"
-import { motion } from "framer-motion"
+import { BoardContext } from "../BoardContext"
+import { motion, animatepres } from "framer-motion"
 
 function Cell({ name, x, y }) {
 	const {
