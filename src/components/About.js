@@ -3,7 +3,11 @@ import styled from "styled-components"
 
 const AboutDiv = styled.div`
 	text-align: left;
-	padding-left: 25%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding-left: 30px;
 	h1 {
 		padding: 1rem 0;
 	}

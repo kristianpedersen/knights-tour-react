@@ -1,13 +1,10 @@
 import { useContext } from "react"
 import styled from "styled-components"
-import Calculate from "../Calculate"
-import { BoardContext } from "../BoardContext"
+import { Calculate } from "../Calculate"
 
-const SingleCell = styled.div`
+const SingleCell = styled.button`
 		border: 1px solid;
-		display: flex;
-		align-items: center;
-		justify-content: center;
+		display: inline;
 		transition: all .25s ease-out;
 		border-color: #999;
 		cursor: pointer;
@@ -21,13 +18,7 @@ const SingleCell = styled.div`
 		}
 	`
 
-function Cell({ name, x, y }) {
-	const {
-		boardSize,
-		setBoard,
-		setHistory,
-	} = useContext(BoardContext)
-
+function Cell({ name, x, y, setBoard, setHistory, boardSize }) {
 	function disableAllButtonsAndCalculate() {
 		const { history, playback } = Calculate(x, y, boardSize)
 		setBoard(history)

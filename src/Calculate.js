@@ -5,8 +5,7 @@
  The unimplemented "playback" array includes a cell's valid moves. This would also be cool to visualize.
  */
 
-
-export default function Calculate(startX, startY, boardSize) {
+export function Calculate(startX, startY, boardSize) {
 	const numberOfCells = boardSize ** 2
 	const board = [...Array(boardSize)].map((_, x) => [...Array(boardSize)].map((_, y) => Cell(x, y)))
 	const history = []

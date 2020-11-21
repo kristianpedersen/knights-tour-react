@@ -1,34 +1,33 @@
 import About from "./components/About"
 import Animation from "./components/Animation"
-import Board from "./components/Board"
+import { Board, MemoizedBoard } from "./components/Board"
 import Input from "./components/Input"
 import Menu from "./components/Nav"
 
-import { BoardProvider } from "./BoardContext"
+import { useState, useRef } from "react"
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 import "./App.css"
 
 function App() {
+	const [animationSpeed, setAnimationSpeed] = useState(50)
+	const [board, setBoard] = useState([])
+	const [boardSize, setBoardSize] = useState(8)
+	const [history, setHistory] = useState([])
+	const animationSpeedRef = useRef(50)
 	return (
-		<BoardProvider>
-			<div className="App">
-				<Router>
-					<Menu title="Knight's Tour" />
-
-					<Switch>
-						<Route exact path="/">
-							<Animation />
-							<Input />
-							<Board />
-						</Route>
-						<Route path="/about">
-							<About />
-						</Route>
-					</Switch>
-
-				</Router>
-			</div>
-		</BoardProvider>
+		<div className="App">
+			<Router>
+				<Menu />
+				<Animation {...{ animationSpeedRef, board }} />
+				<Input {...{
+					animationSpeed, setAnimationSpeed,
+					animationSpeedRef,
+					boardSize, setBoardSize,
+					setBoard,
+				}} />
+				<Board {...{ boardSize, setBoard, history, setHistory }} />
+			</Router>
+		</div>
 	)
 }
 

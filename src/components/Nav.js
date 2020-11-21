@@ -27,10 +27,10 @@ function Menu({ title }) {
 	return (
 
 		<Nav>
-			<h1>{title}</h1>
+			<h1>Knight's Tour</h1>
 			<ul>
-				<NavLink exact to="/"><li>Board</li></NavLink>
-				<NavLink to="/about"><li>About</li></NavLink>
+				<NavLink exact to="/knights-tour-react"><li>Board</li></NavLink>
+				<NavLink to="/knights-tour-react/about"><li>About</li></NavLink>
 			</ul>
 		</Nav>
 

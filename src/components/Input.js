@@ -1,23 +1,22 @@
-import { useContext } from "react"
-import { BoardContext } from "../BoardContext"
 import styled from "styled-components"
 
 const Form = styled.form`
 	display: flex;
-	align-items: center;
+	align-items: flex-end;
 	justify-content: space-around;
 
-	label {
+	label, button {
 		padding: 1rem;
-		background-color: #eee;
-		border: 1px solid #ddd;
+	}
+
+	label {
+		background-color: #d3e3e9;
+		border: 1px solid #0596cb;
 		margin-top: 1rem;
-		min-width: 300px;
 	}
 
 	button {
 		padding: 1rem;
-		font-size: 1.25rem;
 	}
 
 	p {
@@ -26,29 +25,28 @@ const Form = styled.form`
 `
 
 const BoardSizeInput = styled.input`
-	padding: 1rem;
 	border: 1px solid black;
-	margin-top: 1rem;
-	display: inline-block;
-	font-size: 1rem;
+	padding: 0.5rem;
+	
 `
 
 const Slider = styled.input`
 	width: 100%;
 `
 
-function Input() {
-	const {
-		animationSpeed: animationSpeedMs, setAnimationSpeed,
-		setBoard,
-		boardSize, setBoardSize,
-	} = useContext(BoardContext)
+function Input({
+	animationSpeed, setAnimationSpeed,
+	animationSpeedRef,
+	setBoard,
+	boardSize, setBoardSize,
+}) {
 
 	function reset(event) {
 		event.preventDefault()
+		document.querySelectorAll("button")
+			.forEach(btn => btn.removeAttribute("style"), Math.random() * 2000)
 		setBoard(previousBoard => [])
 	}
-
 
 	function createButtons(event) {
 		if (event.target.value <= 26) {
@@ -59,9 +57,10 @@ function Input() {
 
 	function updateAnimationSpeed(event) {
 		setAnimationSpeed(event.target.value)
+		animationSpeedRef.current = event.target.value
 	}
 
-	const totalDurationSeconds = (animationSpeedMs * (boardSize ** 2) / 1000)
+	const totalDurationSeconds = (animationSpeed * (boardSize ** 2) / 1000)
 	const minutes = Math.floor(totalDurationSeconds / 60)
 	const seconds = Math.floor(totalDurationSeconds % 60)
 	let output = ""
@@ -84,6 +83,7 @@ function Input() {
 					max="26" // Sticking to the English alphabet
 					name="num-cells"
 					onChange={createButtons}
+					onClick={e => e.target.focus()}
 					type="number"
 					value={boardSize}
 				/>
@@ -97,12 +97,12 @@ function Input() {
 					type="range"
 					name="animation-speed"
 					onChange={updateAnimationSpeed}
-					value={animationSpeedMs}
 					min="0"
 					max="1000"
 					step="5"
 				/>
-				<p>Interval: {animationSpeedMs} ms (total duration: {output})</p>
+				{/* <p>Interval: {animationSpeed} ms (total duration: {output})</p> */}
+				<p>Interval: {animationSpeed} ms (total duration: {output})</p>
 			</label>
 		</Form>
 	)
