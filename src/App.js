@@ -9,7 +9,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 import "./App.css"
 
 function App() {
-	const [animationSpeed, setAnimationSpeed] = useState(50)
+	const [animationSpeed, setAnimationSpeed] = useState(10)
 	const [board, setBoard] = useState([])
 	const [boardSize, setBoardSize] = useState(8)
 	const [history, setHistory] = useState([])
@@ -19,7 +19,7 @@ function App() {
 		<div className="App">
 			<Router>
 				<Menu />
-				<Animation {...{ animationSpeed, animationSpeedRef, board, resetButton }} />
+				<Animation {...{ animationSpeedRef, board, resetButton }} />
 				<Input {...{
 					animationSpeed, setAnimationSpeed,
 					animationSpeedRef,

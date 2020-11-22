@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import { useRef } from "react"
 
 const Form = styled.form`
 	display: flex;
@@ -37,6 +38,7 @@ function Input({
 	resetButton, setResetButton,
 	setBoard,
 }) {
+	const animationSpeedP = useRef(null)
 
 	function reset(event) {
 		event.preventDefault()
@@ -55,22 +57,23 @@ function Input({
 	}
 
 	function updateAnimationSpeed(event) {
-		setAnimationSpeed(Number(event.target.value))
+		const animationDurationSeconds = (animationSpeedRef.current * (boardSize ** 2) / 1000)
+		const minutes = Math.floor(animationDurationSeconds / 60)
+		const seconds = Math.floor(animationDurationSeconds % 60)
+
+		let output = ""
+		if (animationDurationSeconds > 60) {
+			output = `${minutes}:${String(seconds).padStart(2, "0")}` // 1:01
+		} else if (animationDurationSeconds >= 10) {
+			output = Math.round(animationDurationSeconds) + "s" // 10s
+		} else {
+			output = animationDurationSeconds.toFixed(1) + "s" // 9.9s
+		}
+
 		animationSpeedRef.current = Number(event.target.value)
+		animationSpeedP.current.innerHTML = `Interval: ${animationSpeedRef.current} ms(total duration: ${output})`
 	}
 
-	const animationDurationSeconds = (animationSpeed * (boardSize ** 2) / 1000)
-	const minutes = Math.floor(animationDurationSeconds / 60)
-	const seconds = Math.floor(animationDurationSeconds % 60)
-	let output = ""
-
-	if (animationDurationSeconds > 60) {
-		output = `${minutes}:${String(seconds).padStart(2, "0")}` // 1:01
-	} else if (animationDurationSeconds >= 10) {
-		output = Math.round(animationDurationSeconds) + "s" // 10s
-	} else {
-		output = animationDurationSeconds.toFixed(1) + "s" // 9.9s
-	}
 
 	return (
 		<Form>
@@ -86,7 +89,7 @@ function Input({
 					type="number"
 					value={boardSize}
 				/>
-				<p>Board size</p>
+				<p>Board size (5-26)</p>
 			</label>
 
 			<button onClick={reset}>Clear</button>
@@ -100,8 +103,7 @@ function Input({
 					max="500"
 					step="5"
 				/>
-				{/* <p>Interval: {animationSpeed} ms (total duration: {output})</p> */}
-				<p>Interval: {animationSpeed} ms (total duration: {output})</p>
+				<p ref={animationSpeedP}></p>
 			</label>
 		</Form>
 	)

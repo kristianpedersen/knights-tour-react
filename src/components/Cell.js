@@ -5,7 +5,9 @@ const SingleCell = styled.button`
 		border: 1px solid;
 		display: inline;
 		transition: all .25s ease-out;
-		border-color: #999;
+		border-color: #666;
+		background-color: #333;
+		color: #ddd;
 		cursor: pointer;
 		font-size: 1rem;
 		

@@ -1,6 +1,7 @@
 import styled from "styled-components"
 import Cell from "./Cell"
 import { useEffect } from "react"
+import { v4 as uuidv4 } from 'uuid'
 
 const BoardContainer = styled.div`
 		margin-top: 1rem;
@@ -49,6 +50,7 @@ function Board({ boardSize, setBoard, setHistory }) {
 						setBoard,
 						setHistory,
 					}}
+					key={uuidv4()}
 				/>
 			)
 		}
