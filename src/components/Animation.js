@@ -30,12 +30,10 @@ function Animation({ animationSpeed, animationSpeedRef, board }) {
 			async function colorizeButtons() {
 				for (const [index, move] of board.entries()) {
 					// Initialize svg
-					const svg = document.createElementNS("http://www.w3.org/2000/svg", 'svg')
+					const ns = "http://www.w3.org/2000/svg"
+					const svg = document.createElementNS(ns, 'svg')
 					svg.setAttribute("preserveAspectRatio", "none")
 					svg.setAttribute("viewBox", `0 0 ${boardWidth} ${boardHeight}`)
-					svg.style.position = "relative"
-					svg.style.left = 0
-					svg.style.bottom = 0
 
 					const button = buttons.find(function getCurrentButton(b) {
 						return b.innerHTML === move.name
@@ -43,13 +41,15 @@ function Animation({ animationSpeed, animationSpeedRef, board }) {
 					let pathString = ""
 					svg.setAttributeNS(null, 'width', '100vw')
 					svg.setAttributeNS(null, 'height', document.querySelector(".board").getBoundingClientRect().height)
-					const blackLine = document.createElementNS("http://www.w3.org/2000/svg", "path")
-					const coloredLine = document.createElementNS("http://www.w3.org/2000/svg", "path")
+					const blackLine = document.createElementNS(ns, "path")
+					const coloredLine = document.createElementNS(ns, "path")
+					const startDot = document.createElementNS(ns, "circle")
 
 					const hue = Math.floor(index * (270 / board.length))
 
-					if (index > 0) { // ... we draw a line from previous move to current move
-						const { left, width, top, height } = button.getBoundingClientRect()
+					const { left, width, top, height } = button.getBoundingClientRect()
+
+					if (index > 0) {
 						const x = left + width / 2
 						const y = Math.abs(top - document.querySelector(".board").getBoundingClientRect().top + height / 2)
 						const previousButton = buttons.find(b => b.innerHTML === board[index - 1].name)
@@ -73,10 +73,17 @@ function Animation({ animationSpeed, animationSpeedRef, board }) {
 						coloredLine.setAttributeNS(null, "d", pathString);
 						coloredLine.setAttributeNS(null, 'stroke', `hsl(${hue}, 100%, 50%)`)
 						coloredLine.setAttributeNS(null, 'stroke-width', "2")
-						// coloredLine.setAttributeNS(null, 'stroke-opacity', 0.5)
 
 						svg.appendChild(blackLine)
 						svg.appendChild(coloredLine)
+
+						if (index === 1) { // Starting point indicator
+							startDot.setAttributeNS(null, "cx", 100)
+							startDot.setAttributeNS(null, "cy", 100)
+							startDot.setAttributeNS(null, "radius", 100)
+							startDot.setAttributeNS(null, "fill", "lime")
+							svg.appendChild(startDot)
+						}
 
 						svg.style.position = "absolute"
 						svg.style.left = 0

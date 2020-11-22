@@ -29,10 +29,10 @@ const BoardSizeInput = styled.input`
 	padding: 0.5rem;
 `
 const Slider = styled.input`
-	width: 100%;
+	min-width: 33vw;
+	display: inline-block;
 `
 function Input({
-	animationSpeed, setAnimationSpeed,
 	animationSpeedRef,
 	boardSize, setBoardSize,
 	resetButton, setResetButton,
@@ -56,24 +56,28 @@ function Input({
 		}
 	}
 
-	function updateAnimationSpeed(event) {
-		const animationDurationSeconds = (animationSpeedRef.current * (boardSize ** 2) / 1000)
-		const minutes = Math.floor(animationDurationSeconds / 60)
-		const seconds = Math.floor(animationDurationSeconds % 60)
+	function getTimeString(totalMilliSeconds) {
+		const totalSeconds = totalMilliSeconds * (boardSize ** 2) / 1000
+		const minutes = Math.floor(totalSeconds / 60)
+		const seconds = Math.floor(totalSeconds % 60)
 
 		let output = ""
-		if (animationDurationSeconds > 60) {
+		if (totalSeconds > 60) {
 			output = `${minutes}:${String(seconds).padStart(2, "0")}` // 1:01
-		} else if (animationDurationSeconds >= 10) {
-			output = Math.round(animationDurationSeconds) + "s" // 10s
+		} else if (totalSeconds >= 10) {
+			output = Math.round(totalSeconds) + "s" // 10s
 		} else {
-			output = animationDurationSeconds.toFixed(1) + "s" // 9.9s
+			output = totalSeconds.toFixed(1) + "s" // 9.9s
 		}
 
-		animationSpeedRef.current = Number(event.target.value)
-		animationSpeedP.current.innerHTML = `Interval: ${animationSpeedRef.current} ms(total duration: ${output})`
+		return output
 	}
 
+	function updateAnimationSpeed(event) {
+		animationSpeedRef.current = Number(event.target.value) || animationSpeedRef.current
+		const output = getTimeString(animationSpeedRef.current)
+		animationSpeedP.current.innerHTML = `Interval: ${animationSpeedRef.current} ms(total duration: ${output})`
+	}
 
 	return (
 		<Form>
@@ -98,12 +102,12 @@ function Input({
 				<Slider
 					type="range"
 					name="animation-speed"
-					onChange={updateAnimationSpeed}
+					onInput={updateAnimationSpeed}
 					min="0"
 					max="500"
 					step="5"
 				/>
-				<p ref={animationSpeedP}></p>
+				<p ref={animationSpeedP}>{`Interval: ${animationSpeedRef.current} ms(total duration: ${getTimeString(animationSpeedRef.current)})`}</p>
 			</label>
 		</Form>
 	)

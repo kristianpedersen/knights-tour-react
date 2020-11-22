@@ -4,7 +4,7 @@ import { Calculate } from "../Calculate"
 const SingleCell = styled.button`
 		border: 1px solid;
 		display: inline;
-		transition: all .25s ease-out;
+		/* transition: all .25s ease-out; */
 		border-color: #666;
 		background-color: #333;
 		color: #ddd;
