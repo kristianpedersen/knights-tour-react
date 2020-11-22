@@ -27,10 +27,9 @@ const BoardContainer = styled.div`
 		}
 		`
 function Board({ boardSize, setBoard, setHistory }) {
-	document.querySelectorAll("svg")
-		.forEach(svg => svg.remove())
-
 	useEffect(() => {
+		document.querySelectorAll("svg")
+			.forEach(svg => svg.remove())
 		document.querySelectorAll("button")
 			.forEach(btn => btn.removeAttribute("style"))
 	}, [boardSize])

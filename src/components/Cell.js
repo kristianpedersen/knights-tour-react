@@ -1,4 +1,3 @@
-import { useContext } from "react"
 import styled from "styled-components"
 import { Calculate } from "../Calculate"
 
@@ -8,6 +7,7 @@ const SingleCell = styled.button`
 		transition: all .25s ease-out;
 		border-color: #999;
 		cursor: pointer;
+		font-size: 1rem;
 		
 		&:hover {
 			box-shadow: 0 0 10px white;
@@ -20,11 +20,11 @@ const SingleCell = styled.button`
 
 function Cell({ name, x, y, setBoard, setHistory, boardSize }) {
 	function disableAllButtonsAndCalculate() {
+		document.querySelectorAll("button").forEach(btn => btn.removeAttribute("style"))
 		const { history, playback } = Calculate(x, y, boardSize)
 		setBoard(history)
 		setHistory(playback)
 	}
-
 
 	return (
 		<SingleCell

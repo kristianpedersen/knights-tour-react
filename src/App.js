@@ -13,16 +13,18 @@ function App() {
 	const [board, setBoard] = useState([])
 	const [boardSize, setBoardSize] = useState(8)
 	const [history, setHistory] = useState([])
+	const [resetButton, setResetButton] = useState(false)
 	const animationSpeedRef = useRef(50)
 	return (
 		<div className="App">
 			<Router>
 				<Menu />
-				<Animation {...{ animationSpeedRef, board }} />
+				<Animation {...{ animationSpeed, animationSpeedRef, board, resetButton }} />
 				<Input {...{
 					animationSpeed, setAnimationSpeed,
 					animationSpeedRef,
 					boardSize, setBoardSize,
+					resetButton, setResetButton,
 					setBoard,
 				}} />
 				<Board {...{ boardSize, setBoard, history, setHistory }} />

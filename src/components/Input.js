@@ -23,29 +23,28 @@ const Form = styled.form`
 		margin-top: 1rem;
 	}
 `
-
 const BoardSizeInput = styled.input`
 	border: 1px solid black;
 	padding: 0.5rem;
-	
 `
-
 const Slider = styled.input`
 	width: 100%;
 `
-
 function Input({
 	animationSpeed, setAnimationSpeed,
 	animationSpeedRef,
-	setBoard,
 	boardSize, setBoardSize,
+	resetButton, setResetButton,
+	setBoard,
 }) {
 
 	function reset(event) {
 		event.preventDefault()
 		document.querySelectorAll("button")
-			.forEach(btn => btn.removeAttribute("style"), Math.random() * 2000)
-		setBoard(previousBoard => [])
+			.forEach(btn => btn.removeAttribute("style"))
+		document.querySelectorAll("svg").forEach(svg => svg.remove())
+		setBoard([])
+		setResetButton(!resetButton)
 	}
 
 	function createButtons(event) {
@@ -56,21 +55,21 @@ function Input({
 	}
 
 	function updateAnimationSpeed(event) {
-		setAnimationSpeed(event.target.value)
-		animationSpeedRef.current = event.target.value
+		setAnimationSpeed(Number(event.target.value))
+		animationSpeedRef.current = Number(event.target.value)
 	}
 
-	const totalDurationSeconds = (animationSpeed * (boardSize ** 2) / 1000)
-	const minutes = Math.floor(totalDurationSeconds / 60)
-	const seconds = Math.floor(totalDurationSeconds % 60)
+	const animationDurationSeconds = (animationSpeed * (boardSize ** 2) / 1000)
+	const minutes = Math.floor(animationDurationSeconds / 60)
+	const seconds = Math.floor(animationDurationSeconds % 60)
 	let output = ""
 
-	if (totalDurationSeconds > 60) {
+	if (animationDurationSeconds > 60) {
 		output = `${minutes}:${String(seconds).padStart(2, "0")}` // 1:01
-	} else if (totalDurationSeconds >= 10) {
-		output = Math.round(totalDurationSeconds) + "s" // 10s
+	} else if (animationDurationSeconds >= 10) {
+		output = Math.round(animationDurationSeconds) + "s" // 10s
 	} else {
-		output = totalDurationSeconds.toFixed(1) + "s" // 9.9s
+		output = animationDurationSeconds.toFixed(1) + "s" // 9.9s
 	}
 
 	return (
@@ -98,7 +97,7 @@ function Input({
 					name="animation-speed"
 					onChange={updateAnimationSpeed}
 					min="0"
-					max="1000"
+					max="500"
 					step="5"
 				/>
 				{/* <p>Interval: {animationSpeed} ms (total duration: {output})</p> */}
