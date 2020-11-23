@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom"
 const Nav = styled.nav`
 	display: flex;
 	justify-content: space-between;
-	padding: 2rem;
+	padding: 1rem;
 	background: hsl(350, 50%, 50%);
 	color: white;
 	box-shadow: 0 0 10px 0 rgba(0,0,0,0.5);
@@ -12,7 +12,14 @@ const Nav = styled.nav`
 
 	ul{
 		display: flex;
+		flex-direction: column;
 		list-style: none;
+	}
+
+	@media (min-width: 768px) {
+		ul {
+			flex-direction: row;
+		}
 	}
 
 	li {

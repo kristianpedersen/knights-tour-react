@@ -4,11 +4,12 @@ function pause(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms))
 }
 
-function Animation({ animationSpeed, animationSpeedRef, board }) {
+function Animation({ animationSpeedRef, board }) {
 	const initialRender = useRef(true)
 
 	useEffect(function resizeSVGOnWindowResize() {
 		if (initialRender.current) {
+			initialRender.current = false
 			console.log("Setting up event listener")
 			window.addEventListener("resize", function handleResize() {
 				const newBoardHeight = document.querySelector(".board").getBoundingClientRect().height
@@ -22,9 +23,7 @@ function Animation({ animationSpeed, animationSpeedRef, board }) {
 		const boardWidth = boardDimensions.width
 		const boardHeight = boardDimensions.height
 
-		if (initialRender.current) {
-			initialRender.current = false
-		} else if (board.length >= 25) {
+		if (board.length >= 25) {
 			const buttons = [...document.querySelectorAll(".board-button")]
 			document.querySelectorAll("svg").forEach(svg => svg.remove())
 			async function colorizeButtons() {
@@ -43,16 +42,19 @@ function Animation({ animationSpeed, animationSpeedRef, board }) {
 					svg.setAttributeNS(null, 'height', document.querySelector(".board").getBoundingClientRect().height)
 					const blackLine = document.createElementNS(ns, "path")
 					const coloredLine = document.createElementNS(ns, "path")
-					const startDot = document.createElementNS(ns, "circle")
 
 					const hue = Math.floor(index * (270 / board.length))
-
+					if (button === undefined) {
+						return
+					}
 					const { left, width, top, height } = button.getBoundingClientRect()
 
-					if (index > 0) {
+					if (index > 0 && button !== undefined) {
 						const x = left + width / 2
 						const y = Math.abs(top - document.querySelector(".board").getBoundingClientRect().top + height / 2)
 						const previousButton = buttons.find(b => b.innerHTML === board[index - 1].name)
+						previousButton.innerHTML = index
+
 						const previousClientRect = previousButton.getBoundingClientRect()
 						const previous = {
 							left: previousClientRect.left,
@@ -68,7 +70,7 @@ function Animation({ animationSpeed, animationSpeedRef, board }) {
 						blackLine.setAttributeNS(null, "d", pathString);
 						blackLine.setAttributeNS(null, 'stroke', "black")
 						blackLine.setAttributeNS(null, 'stroke-width', "4")
-						blackLine.setAttributeNS(null, 'stroke-opacity', 0.5)
+						blackLine.setAttributeNS(null, 'stroke-opacity', 0.1)
 
 						coloredLine.setAttributeNS(null, "d", pathString);
 						coloredLine.setAttributeNS(null, 'stroke', `hsl(${hue}, 100%, 50%)`)
@@ -76,14 +78,6 @@ function Animation({ animationSpeed, animationSpeedRef, board }) {
 
 						svg.appendChild(blackLine)
 						svg.appendChild(coloredLine)
-
-						if (index === 1) { // Starting point indicator
-							startDot.setAttributeNS(null, "cx", 100)
-							startDot.setAttributeNS(null, "cy", 100)
-							startDot.setAttributeNS(null, "radius", 100)
-							startDot.setAttributeNS(null, "fill", "lime")
-							svg.appendChild(startDot)
-						}
 
 						svg.style.position = "absolute"
 						svg.style.left = 0

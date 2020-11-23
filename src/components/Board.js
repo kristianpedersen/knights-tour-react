@@ -4,29 +4,29 @@ import { useEffect } from "react"
 import { v4 as uuidv4 } from 'uuid'
 
 const BoardContainer = styled.div`
-		margin-top: 1rem;
-		width: 100%;
-		height: 100%;
+	margin-top: 1rem;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	background: #333;
+	color: #aaa;		
+
+	hr {
+		visibility: hidden;
+	}
+
+	.row {
 		display: flex;
-		background: #333;
-		color: #aaa;		
+		flex-direction: column;
+		justify-content: space-evenly;
+		width: 100vw;
+	}
 
-		hr {
-			visibility: hidden;
-		}
-
-		.row {
-			display: flex;
-			flex-direction: column;
-			justify-content: space-evenly;
-			width: 100vw;
-		}
-
-		button {
-			display: inline-block;
-			height: 100%;
-		}
-		`
+	button {
+		display: inline-block;
+		height: 100%;
+	}
+`
 function Board({ boardSize, setBoard, setHistory }) {
 	useEffect(() => {
 		document.querySelectorAll("svg")

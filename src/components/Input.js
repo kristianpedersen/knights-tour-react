@@ -3,21 +3,26 @@ import { useRef } from "react"
 
 const Form = styled.form`
 	display: flex;
-	align-items: flex-end;
-	justify-content: space-around;
+	align-items: flex-start;
+	flex-wrap: wrap;
+	justify-content: center;
 
-	label, button {
-		padding: 1rem;
+	@media (min-width: 728px) {
+		flex-wrap: nowrap;
 	}
 
 	label {
-		background-color: #d3e3e9;
-		border: 1px solid #0596cb;
-		margin-top: 1rem;
+		background-color: ${props => props.color};
+		padding: 1rem;
+		width: 100%;
+		justify-content: center;
 	}
 
 	button {
 		padding: 1rem;
+		font-size: 1rem;
+		margin: 1rem;
+		margin-bottom: 0;
 	}
 
 	p {
@@ -49,6 +54,12 @@ function Input({
 		setResetButton(!resetButton)
 	}
 
+	function boardSizeAndSpeed(event, size, speed) {
+		event.preventDefault()
+		setBoardSize(size)
+		animationSpeedRef.current = speed
+	}
+
 	function createButtons(event) {
 		if (event.target.value <= 26) {
 			const n = Number(event.target.value)
@@ -56,8 +67,9 @@ function Input({
 		}
 	}
 
-	function getTimeString(totalMilliSeconds) {
-		const totalSeconds = totalMilliSeconds * (boardSize ** 2) / 1000
+	function getTimeString(totalMilliseconds) {
+		const numberOfCells = boardSize ** 2
+		const totalSeconds = totalMilliseconds * numberOfCells / 1000
 		const minutes = Math.floor(totalSeconds / 60)
 		const seconds = Math.floor(totalSeconds % 60)
 
@@ -76,7 +88,7 @@ function Input({
 	function updateAnimationSpeed(event) {
 		animationSpeedRef.current = Number(event.target.value) || animationSpeedRef.current
 		const output = getTimeString(animationSpeedRef.current)
-		animationSpeedP.current.innerHTML = `Interval: ${animationSpeedRef.current} ms(total duration: ${output})`
+		animationSpeedP.current.innerHTML = `Interval: ${animationSpeedRef.current} ms (total duration: ${output})`
 	}
 
 	return (
@@ -94,9 +106,11 @@ function Input({
 					value={boardSize}
 				/>
 				<p>Board size (5-26)</p>
+				<button onClick={e => boardSizeAndSpeed(e, 8, 50)}>8x8</button>
+				<button onClick={e => boardSizeAndSpeed(e, 26, 250)}>26x26</button>
+				<button onClick={reset}>Clear</button>
 			</label>
 
-			<button onClick={reset}>Clear</button>
 
 			<label htmlFor="speed">
 				<Slider
@@ -107,7 +121,7 @@ function Input({
 					max="500"
 					step="5"
 				/>
-				<p ref={animationSpeedP}>{`Interval: ${animationSpeedRef.current} ms(total duration: ${getTimeString(animationSpeedRef.current)})`}</p>
+				<p ref={animationSpeedP}>{`Interval: ${animationSpeedRef.current} ms (total duration: ${getTimeString(animationSpeedRef.current)})`}</p>
 			</label>
 		</Form>
 	)

@@ -9,7 +9,10 @@ const SingleCell = styled.button`
 		background-color: #333;
 		color: #ddd;
 		cursor: pointer;
-		font-size: 1rem;
+		font-size: 0.75rem;
+		text-align: start;
+		padding-left: 0.5rem;
+		padding-right: -0.5rem;
 		
 		&:hover {
 			box-shadow: 0 0 10px white;

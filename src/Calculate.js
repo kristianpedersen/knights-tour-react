@@ -12,7 +12,7 @@ export function Calculate(startX, startY, boardSize) {
 	const playback = []
 
 	board[startX][startY].validMoves = board[startX][startY].getValidMoves()
-	if (history.length === boardSize ** 2) {
+	if (history.length === numberOfCells) {
 		return { history, playback }
 	}
 
