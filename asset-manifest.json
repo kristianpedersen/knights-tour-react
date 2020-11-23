@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/knights-tour-react/static/css/main.c08a88a1.chunk.css",
-    "main.js": "/knights-tour-react/static/js/main.32017a67.chunk.js",
-    "main.js.map": "/knights-tour-react/static/js/main.32017a67.chunk.js.map",
+    "main.js": "/knights-tour-react/static/js/main.bbc6190a.chunk.js",
+    "main.js.map": "/knights-tour-react/static/js/main.bbc6190a.chunk.js.map",
     "runtime-main.js": "/knights-tour-react/static/js/runtime-main.67a18792.js",
     "runtime-main.js.map": "/knights-tour-react/static/js/runtime-main.67a18792.js.map",
     "static/js/2.cf86ebef.chunk.js": "/knights-tour-react/static/js/2.cf86ebef.chunk.js",
@@ -17,6 +17,6 @@
     "static/js/runtime-main.67a18792.js",
     "static/js/2.cf86ebef.chunk.js",
     "static/css/main.c08a88a1.chunk.css",
-    "static/js/main.32017a67.chunk.js"
+    "static/js/main.bbc6190a.chunk.js"
   ]
 }
