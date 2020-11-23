@@ -2,26 +2,26 @@ import styled from "styled-components"
 import { Calculate } from "../Calculate"
 
 const SingleCell = styled.button`
-		border: 1px solid;
-		display: inline;
-		/* transition: all .25s ease-out; */
-		border-color: #666;
-		background-color: #333;
-		color: #ddd;
-		cursor: pointer;
-		font-size: 0.75rem;
-		text-align: start;
-		padding-left: 0.5rem;
-		padding-right: -0.5rem;
-		
-		&:hover {
-			box-shadow: 0 0 10px white;
-		}
+	border: 1px solid;
+	display: inline;
+	/* transition: all .25s ease-out; */
+	border-color: #666;
+	background-color: #333;
+	color: #ddd;
+	cursor: pointer;
+	font-size: 0.8rem;
+	text-align: start;
+	padding-left: 0.5rem;
+	padding-right: -0.5rem;
+	
+	&:hover {
+		box-shadow: 0 0 10px white;
+	}
 
-		&.active:hover{
-			box-shadow: 0 0 10px black;
-		}
-	`
+	&.active:hover{
+		box-shadow: 0 0 10px black;
+	}
+`
 
 function Cell({ name, x, y, setBoard, setHistory, boardSize }) {
 	function disableAllButtonsAndCalculate() {
