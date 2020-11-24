@@ -24,6 +24,7 @@ const Form = styled.form`
 
 	p {
 		margin-top: 1rem;
+		user-select: none;
 	}
 `
 const BoardSizeInput = styled.input`
@@ -35,6 +36,7 @@ const Slider = styled.input`
 	display: inline-block;
 `
 function Input({
+	animate, setAnimate,
 	animationSpeed,
 	boardSize, setBoardSize,
 	resetButton, setResetButton,
@@ -42,17 +44,29 @@ function Input({
 }) {
 	const animationSpeedP = useRef(null)
 
+	function deleteSVGs() {
+		document.querySelectorAll("svg").forEach(svg => svg.remove())
+	}
+
+	function enableAllInputs() {
+		document.querySelectorAll("input")
+			.forEach(input => input.disabled = false)
+		console.log("lol")
+	}
+
 	function reset(event) {
 		event.preventDefault()
+		enableAllInputs()
+		deleteSVGs()
 		document.querySelectorAll("button")
 			.forEach(btn => btn.removeAttribute("style"))
-		document.querySelectorAll("svg").forEach(svg => svg.remove())
 		setBoard([])
 		setResetButton(!resetButton)
 	}
 
 	function boardSizeHandler(event, size) {
 		event.preventDefault()
+		enableAllInputs()
 		setBoardSize(size)
 	}
 
@@ -61,6 +75,11 @@ function Input({
 			const n = Number(event.target.value)
 			setBoardSize(n)
 		}
+	}
+
+	function toggleAnimationState(event) {
+		deleteSVGs()
+		setAnimate(event.target.checked)
 	}
 
 	function getTimeString(totalMilliseconds) {
@@ -83,8 +102,8 @@ function Input({
 
 	function updateAnimationSpeed(event) {
 		animationSpeed.current = Number(event.target.value) || animationSpeed.current
-		const output = getTimeString(animationSpeed.current)
-		animationSpeedP.current.innerHTML = `Interval: ${animationSpeed.current} ms (total duration: ${output})`
+		const output = `Interval: ${animationSpeed.current}ms`
+		animationSpeedP.current.innerHTML = `Interval: ${animationSpeed.current} ms`
 	}
 
 	return (
@@ -101,13 +120,23 @@ function Input({
 					type="number"
 					value={boardSize}
 				/>
-				<p>Board size (5-26)</p>
+				<p className="info">  Board size (5-26)</p>
 			</label>
 
 			<label htmlFor="buttons">
 				<button onClick={e => boardSizeHandler(e, 8)}>8x8</button>
 				<button onClick={e => boardSizeHandler(e, 26)}>26x26</button>
 				<button onClick={reset}>Clear</button>
+			</label>
+
+			<label htmlFor="instant-mode">
+				<input
+					type="checkbox"
+					name="instant-mode"
+					id="instant-mode"
+					onChange={toggleAnimationState}
+				/>
+				<p className="info">Animate solution</p>
 			</label>
 
 			<label htmlFor="speed">
@@ -118,8 +147,11 @@ function Input({
 					min="0"
 					max="500"
 					step="5"
+					disabled={!animate}
 				/>
-				<p ref={animationSpeedP}>{`Interval: ${animationSpeed.current} ms (total duration: ${getTimeString(animationSpeed.current)})`}</p>
+				<p ref={animationSpeedP}>
+					{`Interval: ${animationSpeed.current} ms`}
+				</p>
 			</label>
 		</Form>
 	)

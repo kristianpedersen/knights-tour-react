@@ -1,9 +1,14 @@
 import styled from "styled-components"
 import Cell from "./Cell"
 import { useEffect } from "react"
+import { motion } from "framer-motion"
 import { v4 as uuidv4 } from 'uuid'
 
-const BoardContainer = styled.div`
+const BoardContainer = styled(motion.div).attrs(({ variants }) => ({
+	initial: variants.out,
+	animate: variants.in,
+	exit: variants.out,
+}))`
 	margin-top: 1rem;
 	width: 100%;
 	height: 100%;
@@ -27,7 +32,7 @@ const BoardContainer = styled.div`
 		height: 100%;
 	}
 `
-function Board({ boardSize, setBoard, setHistory }) {
+function Board({ boardSize, setBoard, setHistory, variants }) {
 	useEffect(() => {
 		document.querySelectorAll("svg")
 			.forEach(svg => svg.remove())
@@ -58,7 +63,7 @@ function Board({ boardSize, setBoard, setHistory }) {
 	}
 
 	return (
-		<BoardContainer className="board" {...{ boardSize }}>
+		<BoardContainer className="board" {...{ boardSize, variants }}>
 			{board.map(row => {
 				return (
 					<div className="row">

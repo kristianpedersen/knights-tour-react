@@ -8,10 +8,11 @@ const SingleCell = styled.button`
 	background-color: #333;
 	color: #ddd;
 	cursor: pointer;
-	font-size: 0.8rem;
+	font-size: 1rem;
 	text-align: start;
 	padding-left: 0.5rem;
 	padding-right: -0.5rem;
+	/* transition: ease all .1s; */
 	
 	&:hover {
 		box-shadow: 0 0 10px white;

@@ -4,7 +4,7 @@ function pause(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms))
 }
 
-function Animation({ animationSpeed, board }) {
+function Animation({ animate, animationSpeed, board }) {
 	const initialRender = useRef(true)
 
 	useEffect(function resizeSVGOnWindowResize() {
@@ -24,7 +24,11 @@ function Animation({ animationSpeed, board }) {
 		const boardHeight = boardDimensions.height
 
 		if (board.length >= 25) {
-			const buttons = [...document.querySelectorAll(".board-button")]
+			const buttons = [...document.querySelectorAll("button")]
+			const inputs = [...document.querySelectorAll("input")].filter(i => {
+				return i.type !== "range"
+			})
+			const infoText = document.querySelectorAll("p.info")
 			document.querySelectorAll("svg").forEach(svg => svg.remove())
 			async function colorizeButtons() {
 				for (const [index, move] of board.entries()) {
@@ -90,6 +94,8 @@ function Animation({ animationSpeed, board }) {
 							const successfulMove = new Set(board.map(move => move.name)).size === board.length
 							if (successfulMove) {
 								buttons.forEach(btn => btn.disabled = true)
+								inputs.forEach(input => input.disabled = true)
+								infoText.forEach(p => p.style.color = "#aaa")
 							}
 							const indicator = document.createElementNS(ns, "circle")
 							indicator.setAttributeNS(null, "cx", index === 1 ? previousX : x)
@@ -118,9 +124,13 @@ function Animation({ animationSpeed, board }) {
 						button.style.color = "white"
 					}
 
-					await pause(animationSpeed.current)
+					if (animate) {
+						await pause(animationSpeed.current)
+					}
 				}
 				buttons.forEach(btn => btn.disabled = false)
+				inputs.forEach(input => input.disabled = false)
+				infoText.forEach(p => p.style.color = "black")
 			}
 			colorizeButtons()
 		}

@@ -30,7 +30,7 @@ const Nav = styled.nav`
 	}
 `
 
-function Menu({ title }) {
+function Menu({ showAbout, setShowAbout }) {
 	return (
 
 		<Nav>

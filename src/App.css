@@ -5,7 +5,8 @@
 }
 
 body {
-	background: radial-gradient(white, hsla(200, 83%, 47%, 0.2))
+	background: radial-gradient(white, hsla(200, 83%, 47%, 0.2));
+	overflow: hidden;
 }
 
 .App {
@@ -19,4 +20,5 @@ body {
 svg {
 	pointer-events: none;
 	viewport-fit: auto;
+	transition: ease all 1s;
 }
