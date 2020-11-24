@@ -4,7 +4,13 @@ function pause(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms))
 }
 
-function Animation({ animate, animationSpeed, board }) {
+function Animation({
+	animate,
+	animationSpeed,
+	board,
+	boardRef,
+	cancelAnimation
+}) {
 	const initialRender = useRef(true)
 
 	useEffect(function resizeSVGOnWindowResize() {
@@ -12,26 +18,27 @@ function Animation({ animate, animationSpeed, board }) {
 			initialRender.current = false
 			console.log("Setting up event listener")
 			window.addEventListener("resize", function handleResize() {
-				const newBoardHeight = document.querySelector(".board").getBoundingClientRect().height
+				const newBoardHeight = boardRef.current.getBoundingClientRect().height
 				document.querySelectorAll("svg").forEach(svg => svg.setAttribute("height", newBoardHeight))
 			})
 		}
 	})
 
 	useEffect(function animateBoardOnStateChange() {
-		const boardDimensions = document.querySelector(".board").getBoundingClientRect()
+		const boardDimensions = boardRef.current.getBoundingClientRect()
 		const boardWidth = boardDimensions.width
 		const boardHeight = boardDimensions.height
 
 		if (board.length >= 25) {
 			const buttons = [...document.querySelectorAll("button")]
-			const inputs = [...document.querySelectorAll("input")].filter(i => {
-				return i.type !== "range"
-			})
-			const infoText = document.querySelectorAll("p.info")
+			const elementsToDisable = [
+				...document.querySelectorAll(".disable-when-animating"),
+				...document.querySelectorAll("p.info")
+			]
 			document.querySelectorAll("svg").forEach(svg => svg.remove())
 			async function colorizeButtons() {
 				for (const [index, move] of board.entries()) {
+					if (cancelAnimation) { return } // If users navigates to About before animation is done.
 					const button = buttons.find(function getCurrentButton(b) {
 						return b.innerHTML === move.name
 					})
@@ -48,7 +55,8 @@ function Animation({ animate, animationSpeed, board }) {
 
 					let pathString = ""
 					svg.setAttributeNS(null, 'width', '100vw')
-					svg.setAttributeNS(null, 'height', document.querySelector(".board").getBoundingClientRect().height)
+					if (cancelAnimation) { return }
+					svg.setAttributeNS(null, 'height', boardRef.current.getBoundingClientRect().height)
 					const blackLine = document.createElementNS(ns, "path")
 					const coloredLine = document.createElementNS(ns, "path")
 
@@ -57,7 +65,7 @@ function Animation({ animate, animationSpeed, board }) {
 
 					if (index > 0) { // Draw line from previous to current
 						const x = left + width / 2
-						const y = Math.abs(top - document.querySelector(".board").getBoundingClientRect().top + height / 2)
+						const y = Math.abs(top - boardRef.current.getBoundingClientRect().top + height / 2)
 						const previousButton = buttons.find(b => b.innerHTML === board[index - 1].name)
 						if (previousButton === undefined) {
 							return
@@ -75,7 +83,7 @@ function Animation({ animate, animationSpeed, board }) {
 							height: previousClientRect.height,
 						}
 						const previousX = previous.left + width / 2
-						const previousY = Math.abs(previous.top - document.querySelector(".board").getBoundingClientRect().top + height / 2)
+						const previousY = Math.abs(previous.top - boardRef.current.getBoundingClientRect().top + height / 2)
 
 						pathString += `M ${x} ${y} L ${previousX} ${previousY}`
 
@@ -92,11 +100,12 @@ function Animation({ animate, animationSpeed, board }) {
 
 						if (index === 1 || index === board.length - 1) {
 							const successfulMove = new Set(board.map(move => move.name)).size === board.length
-							if (successfulMove) {
-								buttons.forEach(btn => btn.disabled = true)
-								inputs.forEach(input => input.disabled = true)
-								infoText.forEach(p => p.style.color = "#aaa")
-							}
+
+							elementsToDisable.forEach(element => {
+								element.disabled = true
+								element.style.color = "grey"
+							})
+
 							const indicator = document.createElementNS(ns, "circle")
 							indicator.setAttributeNS(null, "cx", index === 1 ? previousX : x)
 							indicator.setAttributeNS(null, "cy", index === 1 ? previousY : y)
@@ -111,7 +120,7 @@ function Animation({ animate, animationSpeed, board }) {
 						svg.style.position = "absolute"
 						svg.style.left = 0
 						svg.style.bottom = 0
-						document.querySelector(".board").appendChild(svg)
+						boardRef.current.appendChild(svg)
 					}
 
 
@@ -122,15 +131,16 @@ function Animation({ animate, animationSpeed, board }) {
 					} else {
 						button.style.backgroundColor = "#333"
 						button.style.color = "white"
+						elementsToDisable.forEach(element => {
+							element.disabled = false
+							element.style.color = "black"
+						})
 					}
 
 					if (animate) {
 						await pause(animationSpeed.current)
 					}
 				}
-				buttons.forEach(btn => btn.disabled = false)
-				inputs.forEach(input => input.disabled = false)
-				infoText.forEach(p => p.style.color = "black")
 			}
 			colorizeButtons()
 		}

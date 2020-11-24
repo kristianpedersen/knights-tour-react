@@ -12,7 +12,6 @@ const SingleCell = styled.button`
 	text-align: start;
 	padding-left: 0.5rem;
 	padding-right: -0.5rem;
-	/* transition: ease all .1s; */
 	
 	&:hover {
 		box-shadow: 0 0 10px white;
@@ -23,13 +22,13 @@ const SingleCell = styled.button`
 	}
 `
 
-function Cell({ name, x, y, setBoard, setHistory, boardSize }) {
+function Cell({ name, x, y, setBoard, boardSize }) {
 	function disableAllButtonsAndCalculate() {
 		setBoard([])
 		document.querySelectorAll("svg").forEach(svg => svg.remove())
 		document.querySelectorAll(".board-button")
 			.forEach(btn => { btn.removeAttribute("style") })
-		const { history, playback } = Calculate(x, y, boardSize)
+		const { history } = Calculate(x, y, boardSize)
 		setBoard(history)
 		// setHistory(playback)
 	}

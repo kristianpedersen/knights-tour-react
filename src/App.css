@@ -20,5 +20,4 @@ body {
 svg {
 	pointer-events: none;
 	viewport-fit: auto;
-	transition: ease all 1s;
 }

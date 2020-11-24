@@ -30,17 +30,15 @@ const Nav = styled.nav`
 	}
 `
 
-function Menu({ showAbout, setShowAbout }) {
+function Menu({ setBoard }) {
 	return (
-
 		<Nav>
 			<h1>Knight's Tour</h1>
 			<ul>
 				<NavLink exact to="/knights-tour-react"><li>Board</li></NavLink>
-				<NavLink to="/knights-tour-react/about"><li>About</li></NavLink>
+				<NavLink onClick={() => setBoard([])} to="/knights-tour-react/about"><li>About</li></NavLink>
 			</ul>
 		</Nav>
-
 	)
 }
 

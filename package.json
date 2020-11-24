@@ -1,4 +1,5 @@
 {
+  "proxy": "http://localhost:3000",
   "name": "knights-tour-react",
   "homepage": "https://kristianpedersen.github.io/knights-tour-react",
   "version": "0.1.0",
@@ -17,7 +18,8 @@
     "react-scripts": "4.0.0",
     "styled-components": "^5.2.1",
     "uuid": "^8.3.1",
-    "web-vitals": "^0.2.4"
+    "web-vitals": "^0.2.4",
+    "wget-improved": "^3.2.1"
   },
   "scripts": {
     "predeploy": "npm run build",

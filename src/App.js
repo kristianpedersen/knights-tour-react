@@ -6,16 +6,20 @@ import Menu from "./components/Nav"
 
 import { useState, useRef } from "react"
 import { Switch, Route } from "react-router-dom"
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence } from "framer-motion"
 import "./App.css"
 
 function App() {
 	const animationSpeed = useRef(50)
+	const [animate, setAnimate] = useState(true)
 	const [board, setBoard] = useState([])
 	const [boardSize, setBoardSize] = useState(8)
-	const [animate, setAnimate] = useState(true)
+	const [cancelAnimation, setCancelAnimation] = useState(false)
 	const [history, setHistory] = useState([])
 	const [resetButton, setResetButton] = useState(false)
+
+	const boardRef = useRef()
+	const cellRef = useRef([])
 
 	const variants = {
 		in: { opacity: 1 },
@@ -25,8 +29,9 @@ function App() {
 	const animationProps = {
 		animate,
 		animationSpeed,
-		board,
-		resetButton
+		board, boardRef,
+		cancelAnimation, setCancelAnimation,
+		resetButton,
 	}
 	const inputProps = {
 		animate, setAnimate,
@@ -36,25 +41,25 @@ function App() {
 		resetButton, setResetButton,
 	}
 	const boardProps = {
+		boardRef,
 		boardSize,
 		history, setHistory,
 		setBoard,
+		setCancelAnimation,
 		variants
 	}
 	return (
 		<div className="App">
-			<Menu />
+			<Menu {...{ setBoard }} />
 			<AnimatePresence exitBeforeEnter>
 				<Switch>
 					<Route exact path="/knights-tour-react">
-						<>
-							<Animation {...animationProps} />
-							<Input {...inputProps} />
-							<Board {...boardProps} />
-						</>
+						<Animation {...animationProps} />
+						<Input {...inputProps} />
+						<Board {...boardProps} />
 					</Route>
 					<Route exact path="/knights-tour-react/about">
-						<About {...{ variants }} />
+						<About {...{ setCancelAnimation, variants }} />
 					</Route>
 				</Switch>
 			</AnimatePresence>
