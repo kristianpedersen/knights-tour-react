@@ -32,9 +32,8 @@ const BoardContainer = styled(motion.div).attrs(({ variants }) => ({
 		height: 100%;
 	}
 `
-function Board({ boardRef, boardSize, setBoard, setCancelAnimation, setHistory, variants }) {
+function Board({ boardRef, boardSize, setBoard, setHistory, variants }) {
 	useEffect(() => {
-		setCancelAnimation(false)
 		document.querySelectorAll("svg")
 			.forEach(svg => svg.remove())
 		document.querySelectorAll("button")

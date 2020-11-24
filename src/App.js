@@ -11,41 +11,33 @@ import "./App.css"
 
 function App() {
 	const animationSpeed = useRef(50)
-	const [animate, setAnimate] = useState(true)
 	const [board, setBoard] = useState([])
 	const [boardSize, setBoardSize] = useState(8)
-	const [cancelAnimation, setCancelAnimation] = useState(false)
 	const [history, setHistory] = useState([])
-	const [resetButton, setResetButton] = useState(false)
 
 	const boardRef = useRef()
 	const cellRef = useRef([])
-
+	const sliderRef = useRef()
 	const variants = {
 		in: { opacity: 1 },
 		out: { opacity: 0 },
 	}
 
 	const animationProps = {
-		animate,
 		animationSpeed,
 		board, boardRef,
-		cancelAnimation, setCancelAnimation,
-		resetButton,
 	}
 	const inputProps = {
-		animate, setAnimate,
 		animationSpeed,
 		board, setBoard,
 		boardSize, setBoardSize,
-		resetButton, setResetButton,
+		sliderRef
 	}
 	const boardProps = {
 		boardRef,
 		boardSize,
 		history, setHistory,
 		setBoard,
-		setCancelAnimation,
 		variants
 	}
 	return (
@@ -59,7 +51,7 @@ function App() {
 						<Board {...boardProps} />
 					</Route>
 					<Route exact path="/knights-tour-react/about">
-						<About {...{ setCancelAnimation, variants }} />
+						<About {...{ variants }} />
 					</Route>
 				</Switch>
 			</AnimatePresence>

@@ -3,9 +3,8 @@ import { motion } from "framer-motion"
 import styled from "styled-components"
 import wget from "wget-improved"
 
-function About({ setCancelAnimation, variants }) {
+function About({ variants }) {
 	useEffect(() => {
-		setCancelAnimation(true)
 		const options = {
 			protocol: 'https',
 			host: 'en.wikipedia.org',

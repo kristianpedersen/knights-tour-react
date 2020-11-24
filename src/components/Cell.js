@@ -24,7 +24,7 @@ const SingleCell = styled.button`
 
 function Cell({ name, x, y, setBoard, boardSize }) {
 	function disableAllButtonsAndCalculate() {
-		setBoard([])
+		// setBoard([])
 		document.querySelectorAll("svg").forEach(svg => svg.remove())
 		document.querySelectorAll(".board-button")
 			.forEach(btn => { btn.removeAttribute("style") })

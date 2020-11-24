@@ -2,11 +2,10 @@ import styled from "styled-components"
 import { useRef } from "react"
 
 function Input({
-	animate, setAnimate,
 	animationSpeed,
 	boardSize, setBoardSize,
-	resetButton, setResetButton,
 	setBoard,
+	sliderRef
 }) {
 	const animationSpeedP = useRef(null)
 
@@ -15,12 +14,11 @@ function Input({
 	}
 
 	function reset(event) {
+		setBoard([])
 		event.preventDefault()
 		deleteSVGs()
 		document.querySelectorAll("button")
 			.forEach(btn => btn.removeAttribute("style"))
-		setBoard([])
-		setResetButton(!resetButton)
 	}
 
 	function boardSizeHandler(event, size) {
@@ -36,9 +34,13 @@ function Input({
 		}
 	}
 
-	function toggleAnimationState(event) {
-		deleteSVGs()
-		setAnimate(event.target.checked)
+	function focusBoardSizeInput(e) {
+		if (e.target.tagName === "INPUT") {
+			e.target.focus()
+		}
+		if (e.target.tagName === "P") {
+			e.target.previousSibling.focus() // Label was clicked
+		}
 	}
 
 	function updateAnimationSpeed(event) {
@@ -48,7 +50,7 @@ function Input({
 
 	return (
 		<Form>
-			<label htmlFor="num-cells" >
+			<label htmlFor="num-cells" onClick={focusBoardSizeInput}>
 				<BoardSizeInput
 					autoFocus
 					className="disable-when-animating"
@@ -56,7 +58,6 @@ function Input({
 					max="26" // Sticking to the English alphabet
 					name="num-cells"
 					onChange={createButtons}
-					onClick={e => e.target.focus()}
 					type="number"
 					value={boardSize}
 				/>
@@ -80,25 +81,13 @@ function Input({
 				</button>
 			</label>
 
-			<label htmlFor="instant-mode">
-				<input
-					className="disable-when-animating"
-					name="instant-mode"
-					id="instant-mode"
-					onChange={toggleAnimationState}
-					type="checkbox"
-					checked={animate}
-				/>
-				<p className="info">Animate solution</p>
-			</label>
-
 			<label htmlFor="speed">
 				<Slider
-					disabled={!animate}
 					min="0"
 					max="500"
 					name="animation-speed"
 					onInput={updateAnimationSpeed}
+					ref={sliderRef.current}
 					step="5"
 					type="range"
 				/>
@@ -112,7 +101,7 @@ function Input({
 
 const Form = styled.form`
 	display: flex;
-	align-items: center;
+	align-items: flex-end;
 	flex-wrap: wrap;
 	justify-content: space-around;
 
@@ -122,12 +111,15 @@ const Form = styled.form`
 
 	label {
 		padding: 0.5rem;
+		background-color: hsl(194, 53%, 85%);
+		border: 1px solid #999;
 	}
 
 	button {
 		padding: 1rem;
 		font-size: 1rem;
 		margin: 1rem;
+		margin-top: 0;
 		margin-bottom: 0;
 	}
 

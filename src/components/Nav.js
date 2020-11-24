@@ -36,7 +36,11 @@ function Menu({ setBoard }) {
 			<h1>Knight's Tour</h1>
 			<ul>
 				<NavLink exact to="/knights-tour-react"><li>Board</li></NavLink>
-				<NavLink onClick={() => setBoard([])} to="/knights-tour-react/about"><li>About</li></NavLink>
+				<NavLink onClick={() => {
+
+					document.querySelectorAll("svg").forEach(svg => svg.remove())
+
+				}} to="/knights-tour-react/about"><li>About</li></NavLink>
 			</ul>
 		</Nav>
 	)
