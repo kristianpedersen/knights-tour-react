@@ -4,7 +4,6 @@ import { Calculate } from "../Calculate"
 const SingleCell = styled.button`
 	border: 1px solid;
 	display: inline;
-	/* transition: all .25s ease-out; */
 	border-color: #666;
 	background-color: #333;
 	color: #ddd;
@@ -25,10 +24,13 @@ const SingleCell = styled.button`
 
 function Cell({ name, x, y, setBoard, setHistory, boardSize }) {
 	function disableAllButtonsAndCalculate() {
-		document.querySelectorAll("button").forEach(btn => btn.removeAttribute("style"))
+		setBoard([])
+		document.querySelectorAll("svg").forEach(svg => svg.remove())
+		document.querySelectorAll(".board-button")
+			.forEach(btn => { btn.removeAttribute("style") })
 		const { history, playback } = Calculate(x, y, boardSize)
 		setBoard(history)
-		setHistory(playback)
+		// setHistory(playback)
 	}
 
 	return (

@@ -24,11 +24,12 @@ function App() {
 					board,
 					resetButton
 				}} />
+				{/* <About /> */}
 				<Input {...{
 					animationSpeed,
 					boardSize, setBoardSize,
 					resetButton, setResetButton,
-					setBoard,
+					board, setBoard,
 				}} />
 				<Board {...{
 					boardSize, setBoard,

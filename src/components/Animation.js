@@ -60,7 +60,7 @@ function Animation({ animationSpeed, board }) {
 						}
 						previousButton.innerHTML = index
 						if (index === board.length - 1) {
-							button.innerHTML = index
+							button.innerHTML = index + 1
 						}
 
 						const previousClientRect = previousButton.getBoundingClientRect()
@@ -87,12 +87,16 @@ function Animation({ animationSpeed, board }) {
 						}
 
 						if (index === 1 || index === board.length - 1) {
+							const successfulMove = new Set(board.map(move => move.name)).size === board.length
+							if (successfulMove) {
+								buttons.forEach(btn => btn.disabled = true)
+							}
 							const indicator = document.createElementNS(ns, "circle")
 							indicator.setAttributeNS(null, "cx", index === 1 ? previousX : x)
 							indicator.setAttributeNS(null, "cy", index === 1 ? previousY : y)
-							indicator.setAttributeNS(null, "r", window.innerWidth / (board.length * 0.5))
+							indicator.setAttributeNS(null, "r", Math.min(width, height) / Math.PI)
 							indicator.setAttributeNS(null, "stroke-width", 1)
-							indicator.setAttributeNS(null, "fill", "lime")
+							indicator.setAttributeNS(null, "fill", successfulMove ? "lime" : "red")
 							indicator.setAttributeNS(null, "stroke", "black")
 
 							svg.appendChild(indicator)
@@ -116,6 +120,7 @@ function Animation({ animationSpeed, board }) {
 
 					await pause(animationSpeed.current)
 				}
+				buttons.forEach(btn => btn.disabled = false)
 			}
 			colorizeButtons()
 		}

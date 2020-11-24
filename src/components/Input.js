@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { useRef } from "react"
+import { useEffect, useRef } from "react"
 
 const Form = styled.form`
 	display: flex;
@@ -38,7 +38,7 @@ function Input({
 	animationSpeed,
 	boardSize, setBoardSize,
 	resetButton, setResetButton,
-	setBoard,
+	board, setBoard,
 }) {
 	const animationSpeedP = useRef(null)
 
