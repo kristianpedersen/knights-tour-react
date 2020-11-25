@@ -1,12 +1,14 @@
+import { BoardContext } from "../BoardContext"
+import { useContext, useRef } from "react"
 import styled from "styled-components"
-import { useRef } from "react"
 
-function Input({
-	animationSpeed,
-	boardSize, setBoardSize,
-	setBoard,
-	sliderRef
-}) {
+export default function Input() {
+	const {
+		animationSpeed,
+		boardSize, setBoardSize,
+		setBoard,
+		sliderRef
+	} = useContext(BoardContext)
 	const animationSpeedP = useRef(null)
 
 	function deleteSVGs() {
@@ -30,7 +32,6 @@ function Input({
 		if (event.target.value <= 26) {
 			const n = Number(event.target.value)
 			setBoardSize(n)
-
 		}
 	}
 
@@ -45,7 +46,7 @@ function Input({
 
 	function updateAnimationSpeed(event) {
 		animationSpeed.current = Number(event.target.value) || animationSpeed.current
-		animationSpeedP.current.innerHTML = `Interval: ${animationSpeed.current} ms`
+		animationSpeedP.current.innerHTML = `Interval: ${(animationSpeed.current / 1000).toFixed(2)} s`
 	}
 
 	return (
@@ -87,12 +88,13 @@ function Input({
 					max="500"
 					name="animation-speed"
 					onInput={updateAnimationSpeed}
+					onLoad={() => console.log("lol")}
 					ref={sliderRef.current}
 					step="5"
 					type="range"
 				/>
 				<p ref={animationSpeedP}>
-					{`Interval: ${animationSpeed.current} ms`}
+					{`Interval: ${(animationSpeed.current / 1000).toFixed(2)} s`}
 				</p>
 			</label>
 		</Form>
@@ -136,5 +138,3 @@ const Slider = styled.input`
 	min-width: 33vw;
 	display: inline-block;
 `
-
-export default Input

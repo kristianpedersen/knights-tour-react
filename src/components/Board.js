@@ -1,38 +1,13 @@
-import styled from "styled-components"
+import { BoardContext } from "../BoardContext"
 import Cell from "./Cell"
-import { useEffect } from "react"
+
 import { motion } from "framer-motion"
+import { useContext, useEffect } from "react"
 import { v4 as uuidv4 } from 'uuid'
+import styled from "styled-components"
 
-const BoardContainer = styled(motion.div).attrs(({ variants }) => ({
-	initial: variants.out,
-	animate: variants.in,
-	exit: variants.out,
-}))`
-	margin-top: 1rem;
-	width: 100%;
-	height: 100%;
-	display: flex;
-	background: #333;
-	color: #aaa;		
-
-	hr {
-		visibility: hidden;
-	}
-
-	.row {
-		display: flex;
-		flex-direction: column;
-		justify-content: space-evenly;
-		width: 100vw;
-	}
-
-	button {
-		display: inline-block;
-		height: 100%;
-	}
-`
-function Board({ boardRef, boardSize, setBoard, setHistory, variants }) {
+export default function Board() {
+	const { boardSize, setBoard, setHistory, variants } = useContext(BoardContext)
 	useEffect(() => {
 		document.querySelectorAll("svg")
 			.forEach(svg => svg.remove())
@@ -63,7 +38,7 @@ function Board({ boardRef, boardSize, setBoard, setHistory, variants }) {
 	}
 
 	return (
-		<BoardContainer className="board" ref={boardRef} {...{ boardSize, variants }}>
+		<BoardContainer className="board" {...{ boardSize, variants }}>
 			{board.map(row => {
 				return (
 					<div className="row">
@@ -75,4 +50,31 @@ function Board({ boardRef, boardSize, setBoard, setHistory, variants }) {
 	)
 }
 
-export { Board }
+const BoardContainer = styled(motion.div).attrs(({ variants }) => ({
+	initial: variants.out,
+	animate: variants.in,
+	exit: variants.out,
+}))`
+	margin-top: 1rem;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	background: #333;
+	color: #aaa;		
+
+	hr {
+		visibility: hidden;
+	}
+
+	.row {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-evenly;
+		width: 100vw;
+	}
+
+	button {
+		display: inline-block;
+		height: 100%;
+	}
+`

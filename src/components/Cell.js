@@ -1,5 +1,27 @@
-import styled from "styled-components"
+import { BoardContext } from "../BoardContext"
 import { Calculate } from "../Calculate"
+import { useContext } from "react"
+import styled from "styled-components"
+
+export default function Cell({ name, x, y }) {
+	const { setBoard, boardSize } = useContext(BoardContext)
+	function disableAllButtonsAndCalculate() {
+		document.querySelectorAll("svg").forEach(svg => svg.remove())
+		document.querySelectorAll(".board-button")
+			.forEach(btn => { btn.removeAttribute("style") })
+		const { history } = Calculate(x, y, boardSize)
+		setBoard(history)
+	}
+
+	return (
+		<SingleCell
+			className="board-button"
+			onClick={disableAllButtonsAndCalculate}
+		>
+			{name}
+		</SingleCell>
+	)
+}
 
 const SingleCell = styled.button`
 	border: 1px solid;
@@ -21,26 +43,3 @@ const SingleCell = styled.button`
 		box-shadow: 0 0 10px black;
 	}
 `
-
-function Cell({ name, x, y, setBoard, boardSize }) {
-	function disableAllButtonsAndCalculate() {
-		// setBoard([])
-		document.querySelectorAll("svg").forEach(svg => svg.remove())
-		document.querySelectorAll(".board-button")
-			.forEach(btn => { btn.removeAttribute("style") })
-		const { history } = Calculate(x, y, boardSize)
-		setBoard(history)
-		// setHistory(playback)
-	}
-
-	return (
-		<SingleCell
-			className="board-button"
-			onClick={disableAllButtonsAndCalculate}
-		>
-			{name}
-		</SingleCell>
-	)
-}
-
-export default Cell

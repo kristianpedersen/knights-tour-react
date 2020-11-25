@@ -1,14 +1,15 @@
-import { useEffect, useRef } from "react"
+import { BoardContext } from "../BoardContext"
+import { useContext, useEffect, useRef } from "react"
 
 function pause(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms))
 }
 
-function Animation({
-	animationSpeed,
-	board,
-	boardRef,
-}) {
+export default function Animation() {
+	const {
+		animationSpeed,
+		board,
+	} = useContext(BoardContext)
 	const initialRender = useRef(true)
 
 	useEffect(function resizeSVGOnWindowResize() {
@@ -100,14 +101,6 @@ function Animation({
 
 						if (index === 1 || index === board.length - 1) {
 							const successfulMove = new Set(board.map(move => move.name)).size === board.length
-
-							// if (successfulMove) {
-							// 	elementsToDisable.forEach(element => {
-							// 		element.disabled = true
-							// 		element.style.color = "grey"
-							// 	})
-							// }
-
 							const indicator = document.createElementNS(ns, "circle")
 							indicator.setAttributeNS(null, "cx", index === 1 ? previousX : x)
 							indicator.setAttributeNS(null, "cy", index === 1 ? previousY : y)
@@ -124,7 +117,6 @@ function Animation({
 						svg.style.bottom = 0
 						document.querySelector(".board").appendChild(svg)
 					}
-
 
 					button.classList.add("active")
 					if (index > 0 && index < board.length - 1) {
@@ -146,5 +138,3 @@ function Animation({
 	}, [board])
 	return null
 }
-
-export default Animation

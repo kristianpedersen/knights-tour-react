@@ -1,6 +1,20 @@
 import styled from "styled-components"
 import { NavLink } from "react-router-dom"
 
+export default function Menu() {
+	return (
+		<Nav>
+			<h1>Knight's Tour</h1>
+			<ul>
+				<NavLink exact to="/knights-tour-react"><li>Board</li></NavLink>
+				<NavLink onClick={() => {
+					document.querySelectorAll("svg").forEach(svg => svg.remove())
+				}} to="/knights-tour-react/about"><li>About</li></NavLink>
+			</ul>
+		</Nav>
+	)
+}
+
 const Nav = styled.nav`
 	display: flex;
 	justify-content: space-between;
@@ -29,21 +43,3 @@ const Nav = styled.nav`
 		text-decoration: none;
 	}
 `
-
-function Menu({ setBoard }) {
-	return (
-		<Nav>
-			<h1>Knight's Tour</h1>
-			<ul>
-				<NavLink exact to="/knights-tour-react"><li>Board</li></NavLink>
-				<NavLink onClick={() => {
-
-					document.querySelectorAll("svg").forEach(svg => svg.remove())
-
-				}} to="/knights-tour-react/about"><li>About</li></NavLink>
-			</ul>
-		</Nav>
-	)
-}
-
-export default Menu
