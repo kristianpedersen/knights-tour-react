@@ -4,8 +4,11 @@
 	box-sizing: border-box;
 }
 
-body {
+body, .ReactModal__Content {
 	background: radial-gradient(white, hsla(200, 83%, 47%, 0.2));
+}
+
+body {
 	overflow: hidden;
 }
 

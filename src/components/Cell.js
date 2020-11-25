@@ -4,7 +4,10 @@ import { useContext } from "react"
 import styled from "styled-components"
 
 export default function Cell({ name, x, y }) {
-	const { setBoard, boardSize } = useContext(BoardContext)
+	const {
+		boardSize,
+		setBoard,
+	} = useContext(BoardContext)
 	function disableAllButtonsAndCalculate() {
 		document.querySelectorAll("svg").forEach(svg => svg.remove())
 		document.querySelectorAll(".board-button")

@@ -5,11 +5,10 @@ export const BoardProvider = props => {
 	const [board, setBoard] = useState([])
 	const [boardSize, setBoardSize] = useState(8)
 	const [history, setHistory] = useState([])
-
-	const animationSpeed = useRef(250)
+	const [modalIsOpen, setModalIsOpen] = useState(false)
+	const animationSpeed = useRef(100)
 	const boardRef = useRef()
 	const sliderRef = useRef()
-
 	const variants = {
 		in: { opacity: 1 },
 		out: { opacity: 0 },
@@ -20,6 +19,7 @@ export const BoardProvider = props => {
 			board, setBoard,
 			boardSize, setBoardSize,
 			history, setHistory,
+			modalIsOpen, setModalIsOpen,
 			animationSpeed,
 			boardRef,
 			sliderRef,

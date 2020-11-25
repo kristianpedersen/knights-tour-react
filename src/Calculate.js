@@ -18,7 +18,7 @@ export function Calculate(startX, startY, boardSize) {
 
 	function Cell(cellX, cellY) {
 		let validMoves = []
-		const rowName = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[boardSize - cellY - 1]
+		const rowName = "ABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅ"[boardSize - cellY - 1]
 		const colName = cellX + 1
 		const name = `${rowName}${colName}`
 

@@ -1,5 +1,5 @@
 import { BoardContext } from "../BoardContext"
-import { useContext, useRef } from "react"
+import { useContext, useEffect, useRef } from "react"
 import styled from "styled-components"
 
 export default function Input() {
@@ -10,6 +10,11 @@ export default function Input() {
 		sliderRef
 	} = useContext(BoardContext)
 	const animationSpeedP = useRef(null)
+	const rangeSlider = useRef(null)
+
+	useEffect(() => {
+		rangeSlider.current.value = animationSpeed.current
+	}, [])
 
 	function deleteSVGs() {
 		document.querySelectorAll("svg").forEach(svg => svg.remove())
@@ -29,7 +34,7 @@ export default function Input() {
 	}
 
 	function createButtons(event) {
-		if (event.target.value <= 26) {
+		if (event.target.value <= 52) {
 			const n = Number(event.target.value)
 			setBoardSize(n)
 		}
@@ -46,26 +51,23 @@ export default function Input() {
 
 	function updateAnimationSpeed(event) {
 		animationSpeed.current = Number(event.target.value) || animationSpeed.current
-		animationSpeedP.current.innerHTML = `Interval: ${(animationSpeed.current / 1000).toFixed(2)} s`
+		animationSpeedP.current.innerHTML = `Interval: ${animationSpeed.current} ms`
 	}
 
 	return (
 		<Form>
-			<label htmlFor="num-cells" onClick={focusBoardSizeInput}>
+			<label htmlFor="buttons">
 				<BoardSizeInput
 					autoFocus
 					className="disable-when-animating"
 					min="5" // There are no solutions for n < 5
-					max="26" // Sticking to the English alphabet
+					max="52" // Sticking to the English alphabet
 					name="num-cells"
 					onChange={createButtons}
 					type="number"
 					value={boardSize}
 				/>
-				<p className="info">Board size (5-26)</p>
-			</label>
-
-			<label htmlFor="buttons">
+				<span className="info">Board size (5-26)</span>
 				<button
 					className="disable-when-animating"
 					onClick={e => boardSizeHandler(e, 8)}>
@@ -80,22 +82,18 @@ export default function Input() {
 					onClick={reset}>
 					Clear
 				</button>
-			</label>
-
-			<label htmlFor="speed">
-				<Slider
+				<input
 					min="0"
 					max="500"
 					name="animation-speed"
-					onInput={updateAnimationSpeed}
-					onLoad={() => console.log("lol")}
-					ref={sliderRef.current}
+					onChange={updateAnimationSpeed}
+					ref={rangeSlider}
 					step="5"
 					type="range"
 				/>
-				<p ref={animationSpeedP}>
-					{`Interval: ${(animationSpeed.current / 1000).toFixed(2)} s`}
-				</p>
+				<span ref={animationSpeedP}>
+					{`Interval: ${animationSpeed.current} ms`}
+				</span>
 			</label>
 		</Form>
 	)
@@ -125,16 +123,15 @@ const Form = styled.form`
 		margin-bottom: 0;
 	}
 
-	p {
+	span {
 		margin-top: 1rem;
 		user-select: none;
+		min-width: 10vw;
+		display: inline-block;
+		margin-left: 1rem;
 	}
 `
 const BoardSizeInput = styled.input`
 	border: 1px solid black;
 	padding: 0.5rem;
-`
-const Slider = styled.input`
-	min-width: 33vw;
-	display: inline-block;
 `

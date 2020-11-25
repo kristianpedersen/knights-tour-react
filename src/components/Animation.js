@@ -6,10 +6,7 @@ function pause(ms) {
 }
 
 export default function Animation() {
-	const {
-		animationSpeed,
-		board,
-	} = useContext(BoardContext)
+	const { animationSpeed, board } = useContext(BoardContext)
 	const initialRender = useRef(true)
 
 	useEffect(function resizeSVGOnWindowResize() {
