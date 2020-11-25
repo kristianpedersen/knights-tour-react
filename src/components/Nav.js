@@ -20,13 +20,13 @@ export default function Menu() {
 }
 
 const Nav = styled.nav`
+	background: hsl(350, 50%, 50%);
+	border-bottom: 1px solid black;
+	box-shadow: 0 0 10px 0 rgba(0,0,0,0.5);
+	color: white;
 	display: flex;
 	justify-content: space-evenly ;
 	padding: 1rem;
-	background: hsl(350, 50%, 50%);
-	color: white;
-	box-shadow: 0 0 10px 0 rgba(0,0,0,0.5);
-	border-bottom: 1px solid black;
 
 	ul{
 		display: flex;
@@ -41,9 +41,9 @@ const Nav = styled.nav`
 	}
 
 	li {
-		padding: 0 5rem;
-		cursor: pointer;
 		color: white;
+		cursor: pointer;
+		padding: 0 5rem;
 		text-decoration: none;
 	}
 `

@@ -24,7 +24,7 @@ export default function Board() {
 	for (let x = 0; x < boardSize; x++) {
 		const row = []
 		for (let y = 0; y < boardSize; y++) {
-			const letter = "ABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅ"[boardSize - y - 1]
+			const letter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[boardSize - y - 1]
 			row.push(
 				<Cell
 					name={`${letter}${x + 1}`}
@@ -59,18 +59,14 @@ const BoardContainer = styled(motion.div).attrs(({ variants }) => ({
 	animate: variants.in,
 	exit: variants.out,
 }))`
-	margin-top: 1rem;
-	width: 100%;
-	height: 80%;
-	@media(max-width: 700px) {
-		height: 50%;
-	}
-	display: flex;
 	background: #333;
-	color: #aaa;		
-	position: absolute;
 	bottom: 0;
+	color: #aaa;		
+	display: flex;
+	height: 80%;
 	left: 0;
+	margin-top: 1rem;
+	position: absolute;
 	right: 0;
 
 	hr {

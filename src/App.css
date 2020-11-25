@@ -1,7 +1,7 @@
 * {
+	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
-	box-sizing: border-box;
 }
 
 body, .ReactModal__Content {
@@ -13,10 +13,10 @@ body {
 }
 
 .App {
-	height: 100vh;
-	font-family: sans-serif;
 	display: flex;
 	flex-direction: column;
+	font-family: sans-serif;
+	height: 100vh;
 	text-align: center;
 }
 

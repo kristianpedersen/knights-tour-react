@@ -27,16 +27,17 @@ export default function Cell({ name, x, y }) {
 }
 
 const SingleCell = styled.button`
-	border: 1px solid;
-	display: inline;
-	border-color: #666;
 	background-color: #333;
+	border-color: #666;
+	border: 1px solid;
 	color: #ddd;
 	cursor: pointer;
+	display: inline;
 	font-size: 1rem;
-	text-align: start;
 	padding-left: 0.5rem;
 	padding-right: -0.5rem;
+	text-align: start;
+	transition: ease .1s all;
 	
 	&:hover {
 		box-shadow: 0 0 10px white;

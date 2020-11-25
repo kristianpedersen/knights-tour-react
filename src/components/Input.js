@@ -34,7 +34,7 @@ export default function Input() {
 	}
 
 	function createButtons(event) {
-		if (event.target.value <= 52) {
+		if (event.target.value <= 26) {
 			const n = Number(event.target.value)
 			setBoardSize(n)
 		}
@@ -47,6 +47,9 @@ export default function Input() {
 		if (e.target.tagName === "P") {
 			e.target.previousSibling.focus() // Label was clicked
 		}
+		if (e.target.tagName === "LABEL") {
+			console.log(e.target)
+		}
 	}
 
 	function updateAnimationSpeed(event) {
@@ -56,18 +59,21 @@ export default function Input() {
 
 	return (
 		<Form>
-			<label htmlFor="buttons">
+			<label htmlFor="board-size" onClick={focusBoardSizeInput}>
 				<BoardSizeInput
 					autoFocus
 					className="disable-when-animating"
 					min="5" // There are no solutions for n < 5
-					max="52" // Sticking to the English alphabet
+					max="55" // Sticking to the English alphabet
 					name="num-cells"
 					onChange={createButtons}
 					type="number"
 					value={boardSize}
 				/>
-				<span className="info">Board size (5-26)</span>
+				<p className="info">Board size (5-26)</p>
+			</label>
+
+			<label htmlFor="buttons">
 				<button
 					className="disable-when-animating"
 					onClick={e => boardSizeHandler(e, 8)}>
@@ -82,7 +88,9 @@ export default function Input() {
 					onClick={reset}>
 					Clear
 				</button>
-				<input
+			</label>
+			<label htmlFor="animation-speed">
+				<RangeSlider
 					min="0"
 					max="500"
 					name="animation-speed"
@@ -91,17 +99,17 @@ export default function Input() {
 					step="5"
 					type="range"
 				/>
-				<span ref={animationSpeedP}>
+				<p ref={animationSpeedP}>
 					{`Interval: ${animationSpeed.current} ms`}
-				</span>
+				</p>
 			</label>
 		</Form>
 	)
 }
 
 const Form = styled.form`
+	align-items: flex-start;
 	display: flex;
-	align-items: flex-end;
 	flex-wrap: wrap;
 	justify-content: space-around;
 
@@ -110,28 +118,34 @@ const Form = styled.form`
 	}
 
 	label {
-		padding: 0.5rem;
 		background-color: hsl(194, 53%, 85%);
 		border: 1px solid #999;
+		padding: 1rem;
+		@media(max-width: 720px) {
+			display: none;
+		}
 	}
 
 	button {
-		padding: 1rem;
 		font-size: 1rem;
-		margin: 1rem;
-		margin-top: 0;
 		margin-bottom: 0;
+		margin-top: 0;
+		margin: 1rem;
+		padding: 1rem;
 	}
 
-	span {
+	p {
+		margin-left: 1rem;
 		margin-top: 1rem;
 		user-select: none;
-		min-width: 10vw;
-		display: inline-block;
-		margin-left: 1rem;
 	}
 `
 const BoardSizeInput = styled.input`
 	border: 1px solid black;
 	padding: 0.5rem;
+`
+const RangeSlider = styled.input`
+	@media(min-width: 1024px) {
+		min-width: 33vw;
+	}
 `
