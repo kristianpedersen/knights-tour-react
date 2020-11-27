@@ -28,8 +28,7 @@ export default function Cell({ name, x, y }) {
 
 const SingleCell = styled.button`
 	background-color: #333;
-	border-color: #666;
-	border: 1px solid;
+	border: 1px solid #666;
 	color: #ddd;
 	cursor: pointer;
 	display: inline;

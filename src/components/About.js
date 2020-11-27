@@ -1,8 +1,9 @@
 import { BoardContext } from "../BoardContext"
 import { motion } from "framer-motion"
-import { useContext, useEffect } from "react"
+import { useContext } from "react"
 import styled from "styled-components"
 import Modal from "react-modal"
+import { AnimatePresence } from "framer-motion"
 
 export default function About() {
 	const {
@@ -16,22 +17,24 @@ export default function About() {
 
 	Modal.setAppElement("#root")
 	return (
-		<Modal
-			isOpen={modalIsOpen}
-			onRequestClose={closeModal}
-		>
-			<AboutDiv {...{ variants }}>
-				<h1>About the knight's tour</h1>
-				<p><a href="https://www.wikiwand.com/en/Knight%27s_tour">Read more at Wikipedia</a></p>
-				<ul>
-					<li>The knight can only move to a position where xDistance=1 and yDistance=2, or vice versa.</li>
-					<li>For each move, we find all valid moves, and choose the one that has the fewest onwards moves. This is known as Warnsdorff's rule.</li>
-					<li>As a fun challenge, I made the algorithm without seeing other implementations, so it can probably be improved a lot.</li>
-				</ul>
-				<h1>Help wanted!</h1>
-				<p>I'd love to see your improvements and suggestions: <a href="https://github.com/KristianPedersen/knights-tour-react">GitHub repo</a></p>
-			</AboutDiv>
-		</Modal>
+		<AnimatePresence exitBeforeEnter>
+			<Modal
+				isOpen={modalIsOpen}
+			// onRequestClose={() => setTimeout(closeModal, 1000)}
+			>
+				<AboutDiv {...{ variants }}>
+					<h1>About the knight's tour</h1>
+					<p><a href="https://www.wikiwand.com/en/Knight%27s_tour">Read more at Wikipedia</a></p>
+					<ul>
+						<li>The knight can only move to a position where xDistance=1 and yDistance=2, or vice versa.</li>
+						<li>For each move, we find all valid moves, and choose the one that has the fewest onwards moves. This is known as Warnsdorff's rule.</li>
+						<li>As a personal challenge, I made the algorithm without seeing other implementations, so I'm sure there are improvements to be made.</li>
+					</ul>
+					<h1>Help wanted!</h1>
+					<p>I'd love to see your improvements and suggestions: <a href="https://github.com/KristianPedersen/knights-tour-react">GitHub repo</a></p>
+				</AboutDiv>
+			</Modal>
+		</AnimatePresence>
 	)
 }
 

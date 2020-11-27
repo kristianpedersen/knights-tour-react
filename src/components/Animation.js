@@ -22,17 +22,13 @@ export default function Animation() {
 		}
 	})
 
-	useEffect(function animateBoardOnStateChange() {
+	useEffect(function animateSolution() {
 		const boardDimensions = document.querySelector(".board").getBoundingClientRect()
 		const boardWidth = boardDimensions.width
 		const boardHeight = boardDimensions.height
 
 		if (board.length >= 25) {
 			const buttons = [...document.querySelectorAll("button")]
-			const elementsToDisable = [
-				...document.querySelectorAll(".disable-when-animating"),
-				...document.querySelectorAll("p.info")
-			]
 			document.querySelectorAll("svg").forEach(svg => svg.remove())
 
 			async function colorizeButtons() {
@@ -61,7 +57,7 @@ export default function Animation() {
 					const hue = Math.floor(index * (270 / board.length))
 					const { left, width, top, height } = button.getBoundingClientRect()
 
-					if (index > 0) { // Draw line from previous to current
+					if (index > 0) { // Draw SVG line from previous position to current position
 						const x = left + width / 2
 						const y = Math.abs(top - document.querySelector(".board").getBoundingClientRect().top + height / 2)
 						const previousButton = buttons.find(b => b.innerHTML === board[index - 1].name)
@@ -96,6 +92,7 @@ export default function Animation() {
 							svg.appendChild(bothLines)
 						}
 
+						// Start and end positions are black, with a red or green circle inside
 						if (index === 1 || index === board.length - 1) {
 							const successfulMove = new Set(board.map(move => move.name)).size === board.length
 							const indicator = document.createElementNS(ns, "circle")
@@ -122,16 +119,12 @@ export default function Animation() {
 					} else {
 						button.style.backgroundColor = "#333"
 						button.style.color = "white"
-						elementsToDisable.forEach(element => {
-							element.disabled = false
-							element.style.color = "black"
-						})
 					}
 					await pause(animationSpeed.current)
 				}
 			}
 			colorizeButtons()
 		}
-	}, [board])
+	}, [board, animationSpeed])
 	return null
 }

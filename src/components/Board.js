@@ -13,7 +13,8 @@ export default function Board() {
 		setHistory,
 		variants
 	} = useContext(BoardContext)
-	useEffect(() => {
+
+	useEffect(function resetBoard() {
 		document.querySelectorAll("svg")
 			.forEach(svg => svg.remove())
 		document.querySelectorAll("button")
@@ -43,7 +44,7 @@ export default function Board() {
 
 	return (
 		<BoardContainer className="board" {...{ boardSize, variants }}>
-			{board.map(row => {
+			{board.map(function drawBoard(row) {
 				return (
 					<div className="row">
 						{row.map(cell => cell)}

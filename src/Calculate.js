@@ -1,11 +1,7 @@
-/**
- Prototyped it in Node.js. Haven't adapted it properly to React yet.
- For the time being, it simply returns an array.
- It could surely be made to affect state, but would the number of state updates be too taxing?
- The unimplemented "playback" array includes a cell's valid moves. This would also be cool to visualize.
- */
-
 export function Calculate(startX, startY, boardSize) {
+	if (boardSize < 5 || boardSize > 26) {
+		return
+	}
 	const numberOfCells = boardSize ** 2
 	const board = [...Array(boardSize)].map((_, x) => [...Array(boardSize)].map((_, y) => Cell(x, y)))
 	const history = []
@@ -22,8 +18,8 @@ export function Calculate(startX, startY, boardSize) {
 		const colName = cellX + 1
 		const name = `${rowName}${colName}`
 
-		function getValidMoves(getValidMovesLength = true, rewind = false) {
-			if (getValidMovesLength) {
+		function getValidMoves(getNextValidMoves = true, rewind = false) {
+			if (getNextValidMoves) {
 				if (history.length > 0) {
 					playback.push({ ...history[history.length - 1], colorize: true })
 					playback.push(...validMoves)
@@ -39,14 +35,14 @@ export function Calculate(startX, startY, boardSize) {
 				validMoves = getValidCellsFromBoard()
 			}
 
-			if (getValidMovesLength && validMoves.length > 0) {
+			if (getNextValidMoves && validMoves.length > 0) {
 				for (const move of validMoves) {
-					move.validMoves = move.getValidMoves(getValidMovesLength = false)
+					move.validMoves = move.getValidMoves(getNextValidMoves = false)
 				}
 				validMoves.sort((a, b) => a.validMoves.length - b.validMoves.length)
 				const next = validMoves[0]
 				board[next.x][next.y].getValidMoves()
-			} else if (getValidMovesLength && validMoves.length === 0 && history.length < numberOfCells) {
+			} else if (getNextValidMoves && validMoves.length === 0 && history.length < numberOfCells) {
 				goBackInHistory()
 			}
 
@@ -68,7 +64,7 @@ export function Calculate(startX, startY, boardSize) {
 			for (let i = history.length - 1; i >= 0; i--) {
 				if (history[i].validMoves.length >= 2) {
 					const { x, y } = history[i]
-					board[x][y].getValidMoves(true, true)
+					board[x][y].getValidMoves(true, true) // getNextValidMoves = true, rewind = true
 					break
 				} else {
 					history.pop()

@@ -7,23 +7,19 @@ export default function Input() {
 		animationSpeed,
 		boardSize, setBoardSize,
 		setBoard,
-		sliderRef
 	} = useContext(BoardContext)
 	const animationSpeedP = useRef(null)
 	const rangeSlider = useRef(null)
 
-	useEffect(() => {
+	useEffect(function updateAnimationSpeedValue() {
 		rangeSlider.current.value = animationSpeed.current
-	}, [])
+	}, [animationSpeed])
 
-	function deleteSVGs() {
-		document.querySelectorAll("svg").forEach(svg => svg.remove())
-	}
-
-	function reset(event) {
+	function resetBoard(event) {
 		setBoard([])
 		event.preventDefault()
-		deleteSVGs()
+		document.querySelectorAll("svg")
+			.forEach(svg => svg.remove())
 		document.querySelectorAll("button")
 			.forEach(btn => btn.removeAttribute("style"))
 	}
@@ -41,14 +37,10 @@ export default function Input() {
 	}
 
 	function focusBoardSizeInput(e) {
-		if (e.target.tagName === "INPUT") {
-			e.target.focus()
-		}
 		if (e.target.tagName === "P") {
-			e.target.previousSibling.focus() // Label was clicked
-		}
-		if (e.target.tagName === "LABEL") {
-			console.log(e.target)
+			e.target.previousSibling.focus()
+		} else if (e.target.tagName === "LABEL") {
+			e.target.querySelector("input").focus()
 		}
 	}
 
@@ -58,52 +50,59 @@ export default function Input() {
 	}
 
 	return (
-		<Form>
-			<label htmlFor="board-size" onClick={focusBoardSizeInput}>
-				<BoardSizeInput
-					autoFocus
-					className="disable-when-animating"
-					min="5" // There are no solutions for n < 5
-					max="55" // Sticking to the English alphabet
-					name="num-cells"
-					onChange={createButtons}
-					type="number"
-					value={boardSize}
-				/>
-				<p className="info">Board size (5-26)</p>
-			</label>
+		<>
+			<Form>
+				<label htmlFor="board-size" onClick={focusBoardSizeInput}>
+					<BoardSizeInput
+						autoFocus
+						className="disable-when-animating"
+						min="5" // There are no solutions for n < 5
+						max="55" // Sticking to the English alphabet
+						name="num-cells"
+						onChange={createButtons}
+						type="number"
+						value={boardSize}
+					/>
+					<p className="info">Board size (5-26)</p>
+				</label>
 
-			<label htmlFor="buttons">
-				<button
-					className="disable-when-animating"
-					onClick={e => boardSizeHandler(e, 8)}>
-					8x8
+				<label htmlFor="buttons">
+					<button
+						className="disable-when-animating"
+						onClick={e => boardSizeHandler(e, 8)}>
+						8x8
 				</button>
-				<button
-					className="disable-when-animating"
-					onClick={e => boardSizeHandler(e, 26)}>
-					26x26
+					<button
+						className="disable-when-animating"
+						onClick={e => boardSizeHandler(e, 26)}>
+						26x26
 				</button>
-				<button
-					onClick={reset}>
-					Clear
+					<button
+						onClick={resetBoard}>
+						Clear
 				</button>
-			</label>
-			<label htmlFor="animation-speed">
-				<RangeSlider
-					min="0"
-					max="500"
-					name="animation-speed"
-					onChange={updateAnimationSpeed}
-					ref={rangeSlider}
-					step="5"
-					type="range"
-				/>
-				<p ref={animationSpeedP}>
-					{`Interval: ${animationSpeed.current} ms`}
-				</p>
-			</label>
-		</Form>
+				</label>
+				<label htmlFor="animation-speed">
+					<RangeSlider
+						min="0"
+						max="500"
+						name="animation-speed"
+						onChange={updateAnimationSpeed}
+						ref={rangeSlider}
+						step="5"
+						type="range"
+					/>
+					<p ref={animationSpeedP}>
+						{`Interval: ${animationSpeed.current} ms`}
+					</p>
+				</label>
+			</Form>
+			<ul>
+				<li>Each move is 1 horizontal step and 2 vertical steps, or 2 horizontal steps and 1 vertical step.</li>
+				<li>The colors shift through the rainbow spectrum as the board is completed.</li>
+				<li>Green starting dot = successful move. Red starting dot = no solution found</li>
+			</ul>
+		</>
 	)
 }
 
@@ -120,6 +119,7 @@ const Form = styled.form`
 	label {
 		background-color: hsl(194, 53%, 85%);
 		border: 1px solid #999;
+		margin-bottom: 1rem;
 		padding: 1rem;
 		@media(max-width: 720px) {
 			display: none;

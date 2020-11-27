@@ -1,1 +1,3 @@
-Animate modal and call it a day
+* Modal exit animation
+* Keyboard navigation
+* Convert tabs to spaces for GitHub
