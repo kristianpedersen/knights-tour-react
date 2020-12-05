@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/knights-tour-react/static/css/main.2ffd5f4d.chunk.css",
-    "main.js": "/knights-tour-react/static/js/main.bd341eb2.chunk.js",
-    "main.js.map": "/knights-tour-react/static/js/main.bd341eb2.chunk.js.map",
+    "main.css": "/knights-tour-react/static/css/main.6540de5b.chunk.css",
+    "main.js": "/knights-tour-react/static/js/main.9a5df5a3.chunk.js",
+    "main.js.map": "/knights-tour-react/static/js/main.9a5df5a3.chunk.js.map",
     "runtime-main.js": "/knights-tour-react/static/js/runtime-main.dca9432b.js",
     "runtime-main.js.map": "/knights-tour-react/static/js/runtime-main.dca9432b.js.map",
     "static/js/2.cb6b9d53.chunk.js": "/knights-tour-react/static/js/2.cb6b9d53.chunk.js",
@@ -10,13 +10,13 @@
     "static/js/3.e0a779db.chunk.js": "/knights-tour-react/static/js/3.e0a779db.chunk.js",
     "static/js/3.e0a779db.chunk.js.map": "/knights-tour-react/static/js/3.e0a779db.chunk.js.map",
     "index.html": "/knights-tour-react/index.html",
-    "static/css/main.2ffd5f4d.chunk.css.map": "/knights-tour-react/static/css/main.2ffd5f4d.chunk.css.map",
+    "static/css/main.6540de5b.chunk.css.map": "/knights-tour-react/static/css/main.6540de5b.chunk.css.map",
     "static/js/2.cb6b9d53.chunk.js.LICENSE.txt": "/knights-tour-react/static/js/2.cb6b9d53.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.dca9432b.js",
     "static/js/2.cb6b9d53.chunk.js",
-    "static/css/main.2ffd5f4d.chunk.css",
-    "static/js/main.bd341eb2.chunk.js"
+    "static/css/main.6540de5b.chunk.css",
+    "static/js/main.9a5df5a3.chunk.js"
   ]
 }
