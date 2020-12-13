@@ -1,5 +1,7 @@
 # Knight's tour visualization
 
+[https://kristianpedersen.github.io/knights-tour-react/](https://kristianpedersen.github.io/knights-tour-react/)
+
 Click on any position on a chess board of variable size, and see a solution for the Knight's Tour, if one exists.
 
 The colors go from 0 to 270 degrees on the color wheel. The start is therefore red, while the end goes towards purple.
